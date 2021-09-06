@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:9411/tpf_prod
+    username: root
+    password: mahdi
+    driver-class-name: com.mysql.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    database: mysql
+    show-sql: false
+  sql:
+    init:
+      platform: mysql
+      mode: always

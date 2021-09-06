@@ -1,0 +1,11 @@
+spring:
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    database: h2
+    show-sql: false
+  sql:
+    init:
+      platform: h2
+      mode: always
