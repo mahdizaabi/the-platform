@@ -1,0 +1,6 @@
+before_script: cd server
+language: java
+jdk:
+  - openjdk11
+script:
+  - ./mvnw clean install
