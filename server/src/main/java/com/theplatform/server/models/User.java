@@ -33,7 +33,7 @@ public class User {
     private String username;
 
     @Column(name = "email")
-    private String name;
+    private String email;
     @Column(name = "password")
     private String password;
     @Column(name = "picture")
