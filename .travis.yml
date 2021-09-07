@@ -1,5 +1,6 @@
-before_script: cd server
-language: java
+before_install:
+  - cd ./server
+  - chmod +x mvnwlanguage: java
 jdk:
   - openjdk11
 script:
