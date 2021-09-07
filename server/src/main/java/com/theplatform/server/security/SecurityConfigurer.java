@@ -2,6 +2,7 @@ package com.theplatform.server.security;
 import com.theplatform.server.security.filters.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,12 +19,17 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
+
+
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().antMatchers("/auth", "/hello").permitAll()
-                .anyRequest().authenticated().and().sessionManagement()
+        http.csrf().disable()
+                .authorizeRequests().antMatchers("/auth", "/hello").permitAll()
+                .and().authorizeRequests().antMatchers(HttpMethod.GET, "/testguest").hasAnyAuthority("ROLE_GUEST")
+                .anyRequest().authenticated()
+                .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         /*  tell to spring: make sure to call Jwt requestfilter befor usernamepaswwordfilter  */
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

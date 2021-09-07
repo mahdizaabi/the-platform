@@ -46,4 +46,8 @@ public class Authentication {
     public ResponseEntity<?> getUSerInfo(@RequestAttribute("id") String str, Principal principal){
         return new ResponseEntity<>(principal, HttpStatus.OK);
     }
+    @GetMapping(path = "/testguest")
+    public String testguest(){
+        return "heyyy authirozarion works fine!";
+    }
 }
