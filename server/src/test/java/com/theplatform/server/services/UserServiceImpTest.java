@@ -1,5 +1,6 @@
 package com.theplatform.server.services;
 
+import com.theplatform.server.models.User;
 import com.theplatform.server.repositories.UserRepository;
 import io.jsonwebtoken.lang.Assert;
 import org.junit.jupiter.api.Assertions;
@@ -28,9 +29,11 @@ class UserServiceImpTest {
 
     @Test
     void checkIfUserAlreadyExists() {
-        Mockito.when(userRepository.existsByUsername(any(String.class))).thenReturn(false);
+        Mockito.when(userRepository.findByUsername(any(String.class))).thenReturn(null);
         Assert.isTrue(!userService.checkIfUserAlreadyExists("mahdi", "lklk"));
-        Mockito.when(userRepository.existsByUsername(any(String.class))).thenReturn(true);
+
+        Mockito.when(userRepository.findByUsername(any(String.class))).thenReturn(new User());
+        Mockito.when(userRepository.findByEmail(any(String.class))).thenReturn(new User());
         Assertions.assertTrue(userService.checkIfUserAlreadyExists("mahdi", "lklk"));
     }
 }
