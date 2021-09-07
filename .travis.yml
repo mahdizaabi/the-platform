@@ -1,4 +1,3 @@
-sudo: required
 before_install:
   - cd ./server
 language: java
