@@ -1,8 +1,9 @@
+sudo: required
 before_install:
   - cd ./server
-  - chmod +x mvnw
 language: java
 jdk:
-  - openjdk11
+  - oraclejdk8
 script:
-  - ./mvn package -DskipTests
+  - ./mvnw clean install -B
+  - ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
