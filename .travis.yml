@@ -5,4 +5,4 @@ language: java
 jdk:
   - openjdk11
 script:
-  - ./mvnw clean install
+  - ./mvn package -DskipTests
