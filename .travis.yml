@@ -1,6 +1,6 @@
 before_install:
-  - chmod +x mvnw
   - cd ./server
+  - chmod +x mvnw
 language: java
 jdk:
   - openjdk11
