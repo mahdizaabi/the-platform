@@ -16,8 +16,10 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 
@@ -30,14 +32,16 @@ public class AuthenticationController {
     private JwtUtil jwtUtil;
     private UserService userService;
 
-    public AuthenticationController(AuthenticationManager authenticationManager, UserDetailsService userDetailsService, JwtUtil jwtUtil, UserService userService) {
+
+    public AuthenticationController(AuthenticationManager authenticationManager, UserDetailsService userDetailsService,
+                                    JwtUtil jwtUtil, UserService userService, PasswordEncoder passwordEncoder) {
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
         this.jwtUtil = jwtUtil;
         this.userService = userService;
     }
 
-    @PostMapping("/auth")
+    @PostMapping("/login")
     public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequest authenticationRequest,
                                           HttpServletResponse httpServletResponse) throws Exception {
         try {
@@ -69,12 +73,23 @@ public class AuthenticationController {
         return "hello";
     }
 
-    @PostMapping(path = "/api/v1/register")
+    @PostMapping(path = "/register")
     public ResponseEntity<?> RegisterUser(@RequestBody UserDto userDto) {
         User user = UserDtoConverter.DtoToUserConverter(userDto);
         if (userService.checkIfUserAlreadyExists(user.getUsername(), user.getEmail())) {
             return new ResponseEntity<String>("User Already Exist", HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>(null, HttpStatus.CREATED);
+        User saveduser = userService.saveNewUser(user);
+        return new ResponseEntity<>(saveduser, null, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/loogout")
+    public void logout(HttpServletResponse httpServletResponse) {
+        httpServletResponse.setHeader("Authorization", "");
+        Cookie cookie = new Cookie("_jwt", null);
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(0);
+        httpServletResponse.addCookie(cookie);
     }
 }
