@@ -45,13 +45,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                                 userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-                httpServletRequest.setAttribute("id", "this is the id");
-
+                httpServletRequest.setAttribute("id", userDetails.getUsername());
             }
         }
-
-        //httpServletResponse.addHeader("Authorization","ddd");
-
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 }
