@@ -6,6 +6,7 @@ import com.theplatform.server.models.User;
 public class UserDtoConverter {
 
     static public User DtoToUserConverter(UserDto userDto) {
+        System.out.println(userDto);
         User user = new User();
         user.setUsername(userDto.getUsername());
         user.setPassword(userDto.getPassword());

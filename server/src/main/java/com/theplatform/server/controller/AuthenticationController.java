@@ -56,6 +56,18 @@ public class AuthenticationController {
         this.sendEmailService = sendEmailService;
 
     }
+    @PostMapping(path = "/register")
+    public ResponseEntity<?> RegisterUser(@RequestBody UserDto userDto) {
+        User user = UserDtoConverter.DtoToUserConverter(userDto);
+        System.out.println("xxxxxxxxxxx");
+        if (userService.checkIfUserAlreadyExists(user.getUsername(), user.getEmail())) {
+            return new ResponseEntity<String>("User Already Exist", HttpStatus.CONFLICT);
+        }
+
+        User saveduser = userService.saveNewUser(user);
+        UserDto savedUserDto = UserDtoConverter.UserToDtoConverter(saveduser);
+        return new ResponseEntity<>(savedUserDto, null, HttpStatus.CREATED);
+    }
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequest authenticationRequest,
@@ -89,17 +101,6 @@ public class AuthenticationController {
         return "hello";
     }
 
-    @PostMapping(path = "/register")
-    public ResponseEntity<?> RegisterUser(@RequestBody UserDto userDto) {
-        User user = UserDtoConverter.DtoToUserConverter(userDto);
-        if (userService.checkIfUserAlreadyExists(user.getUsername(), user.getEmail())) {
-            return new ResponseEntity<String>("User Already Exist", HttpStatus.CONFLICT);
-        }
-
-        User saveduser = userService.saveNewUser(user);
-        UserDto savedUserDto = UserDtoConverter.UserToDtoConverter(saveduser);
-        return new ResponseEntity<>(savedUserDto, null, HttpStatus.CREATED);
-    }
 
     @GetMapping("/loogout")
     public void logout(HttpServletResponse httpServletResponse) {
