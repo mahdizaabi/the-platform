@@ -5,9 +5,6 @@ spring:
     username: root
     password: mahdi
     driver-class-name: com.mysql.jdbc.Driver
-
-
-
   jpa:
     hibernate:
       ddl-auto: update
