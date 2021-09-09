@@ -25,7 +25,6 @@ public class MyUserDetailsService implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
        com.theplatform.server.models.User user = userRepository.findByUsername(s);
-        System.out.println("====>" + user.toString());
         List<SimpleGrantedAuthority> auth = new ArrayList<>();
         List<Role> rolex =  user.getRoles();
         rolex.forEach(role->auth.add(new SimpleGrantedAuthority(role.getName())));
