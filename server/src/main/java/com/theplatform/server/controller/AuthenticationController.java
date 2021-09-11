@@ -43,7 +43,7 @@ public class AuthenticationController {
     private final JwtUtil jwtUtil;
     private final UserService userService;
     private final SendEmailServiceImpl sendEmailService;
-
+    /* latest password for Laura : $2a$10$q./BPNS/AUMtoYDn.0.i9u4NA4TI0KYDyjtb1qGwIa/mVruN0sKwG */
 
     public AuthenticationController(AuthenticationManager authenticationManager, UserDetailsService userDetailsService,
                                     JwtUtil jwtUtil, UserService userService, PasswordEncoder passwordEncoder,
@@ -72,16 +72,24 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequest authenticationRequest,
                                           HttpServletResponse httpServletResponse) throws Exception {
+        System.out.println(authenticationRequest.toString());
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
                     authenticationRequest.getPassword()));
         } catch (BadCredentialsException exc) {
+            exc.printStackTrace();
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
         }
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         final String jwt = jwtUtil.generateToken(userDetails);
-        System.out.println("==>2" + jwt);
+       /* httpServletResponse.setHeader("Authorization", jwt);
+        Cookie cookie = new Cookie("_jwt", jwt);
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(12);
+        httpServletResponse.addCookie(cookie);
+        System.out.println("==>2" + jwt);*/
         return new ResponseEntity<>(new AuthenticationResponse(jwt, userDetails.getUsername()), HttpStatus.ACCEPTED);
 
     }

@@ -1,0 +1,74 @@
+package com.theplatform.server.controller;
+
+import com.theplatform.server.dto.CourseDto;
+import com.theplatform.server.dto.converters.CourseDtoConverter;
+import com.theplatform.server.models.Course;
+import com.theplatform.server.models.User;
+import com.theplatform.server.services.CourseService;
+import com.theplatform.server.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
+import java.util.List;
+
+@RestController
+public class CourseController {
+    @Autowired
+    UserService userService;
+    @Autowired
+    CourseService courseService;
+
+    @PostMapping("/course")
+    public ResponseEntity<?> createCourse(@RequestBody CourseDto courseDto, Principal principal) {
+        try {
+            //String instructorName = principal.getName();
+            CourseDto course = courseService.createCourse(courseDto, principal.getName());
+            return new ResponseEntity<>(course, HttpStatus.OK);
+        } catch (Exception exc) {
+            exc.printStackTrace();
+            return new ResponseEntity<>("failed to save course", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/instructor/courses")
+    public ResponseEntity<?> getAllInctructorCourses(Principal principal) {
+        try {
+            List<CourseDto> coursesList = courseService.getInstructorCourses(principal.getName());
+            return new ResponseEntity<>(coursesList, HttpStatus.OK);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/course/{slug}")
+    public ResponseEntity<?> getCourseFromSlug(@PathVariable String slug) {
+        try {
+            CourseDto course = courseService.getCourseFromSlug(slug);
+            if (course == null) {
+                return new ResponseEntity<>("course not found", HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(course, HttpStatus.OK);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/course/edit/{slug}")
+    public ResponseEntity<?> updateExistingCourse(@PathVariable String slug, @RequestBody CourseDto courseDto) {
+        try {
+            CourseDto course = courseService.updateCourse(slug, courseDto);
+            if (course == null) {
+                return new ResponseEntity<>("course not found", HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(course, HttpStatus.OK);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+}
