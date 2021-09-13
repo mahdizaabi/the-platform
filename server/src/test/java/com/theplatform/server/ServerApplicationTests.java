@@ -5,7 +5,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Profile;
 
 @SpringBootTest
-@Profile(value = "dev")
+@Profile(value = "test")
 class ServerApplicationTests {
 
 	@Test
