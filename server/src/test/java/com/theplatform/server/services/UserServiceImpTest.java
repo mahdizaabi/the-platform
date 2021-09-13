@@ -37,7 +37,6 @@ class UserServiceImpTest {
     void checkIfUserAlreadyExists() {
         Mockito.when(userRepository.findByUsername(any(String.class))).thenReturn(null);
         Assert.isTrue(!userService.checkIfUserAlreadyExists("mahdi", "lklk"));
-
         Mockito.when(userRepository.findByUsername(any(String.class))).thenReturn(new User());
         Mockito.when(userRepository.findByEmail(any(String.class))).thenReturn(new User());
         Assertions.assertTrue(userService.checkIfUserAlreadyExists("mahdi", "lklk"));

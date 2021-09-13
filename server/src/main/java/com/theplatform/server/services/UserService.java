@@ -15,4 +15,7 @@ public interface UserService {
     User resetPassword(ResetPasswordRequest resetPasswordRequest);
     User checkResetPasswordCode(String code);
     User setNewPassword(HashMap<String, String> map, User user);
-}
+    User makeInstructor(String username);
+    User saveUpdatedUser(User user);
+
+    }

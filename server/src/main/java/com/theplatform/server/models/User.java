@@ -1,26 +1,23 @@
 package com.theplatform.server.models;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.repository.cdi.Eager;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Data
 @NoArgsConstructor
+@Data
 @AllArgsConstructor
 @Table(name = "user")
 public class User {
@@ -53,11 +50,13 @@ public class User {
 
     @UpdateTimestamp
     private Date updatedOn;
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Course> courseList;
+    @ToString.Exclude()
+    @JsonManagedReference
+    private List<Course> courseList = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Role> roles = new ArrayList<>();
-
-
 }

@@ -5,13 +5,11 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.theplatform.server.dto.UserDto;
 import com.theplatform.server.dto.converters.UserDtoConverter;
-import com.theplatform.server.models.AuthenticationRequest;
-import com.theplatform.server.models.AuthenticationResponse;
-import com.theplatform.server.models.ResetPasswordRequest;
-import com.theplatform.server.models.User;
+import com.theplatform.server.models.*;
 import com.theplatform.server.security.utils.JwtUtil;
 import com.theplatform.server.services.SendEmailServiceImpl;
 import com.theplatform.server.services.UserService;
+import net.bytebuddy.build.Plugin;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,20 +20,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.reactive.function.client.WebClient;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
-
+@RequestMapping("/api")
 public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
@@ -54,10 +48,11 @@ public class AuthenticationController {
         this.jwtUtil = jwtUtil;
         this.userService = userService;
         this.sendEmailService = sendEmailService;
-
     }
+
     @PostMapping(path = "/register")
     public ResponseEntity<?> RegisterUser(@RequestBody UserDto userDto) {
+
         User user = UserDtoConverter.DtoToUserConverter(userDto);
         System.out.println("xxxxxxxxxxx");
         if (userService.checkIfUserAlreadyExists(user.getUsername(), user.getEmail())) {
@@ -72,7 +67,6 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequest authenticationRequest,
                                           HttpServletResponse httpServletResponse) throws Exception {
-        System.out.println(authenticationRequest.toString());
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
                     authenticationRequest.getPassword()));
@@ -82,15 +76,18 @@ public class AuthenticationController {
         }
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+        User user = userService.getUserByUsername(authenticationRequest.getUsername());
+        List<String> roles = user.getRoles().stream().map(Role::getName).collect(Collectors.toList());
         final String jwt = jwtUtil.generateToken(userDetails);
-       /* httpServletResponse.setHeader("Authorization", jwt);
+        httpServletResponse.setHeader("Authorization", jwt);
         Cookie cookie = new Cookie("_jwt", jwt);
         cookie.setPath("/");
-        cookie.setHttpOnly(true);
-        cookie.setMaxAge(12);
+        cookie.setSecure(false);
+        cookie.setDomain("localhost");
+        cookie.setHttpOnly(false);
         httpServletResponse.addCookie(cookie);
-        System.out.println("==>2" + jwt);*/
-        return new ResponseEntity<>(new AuthenticationResponse(jwt, userDetails.getUsername()), HttpStatus.ACCEPTED);
+        httpServletResponse.addHeader("Access-Control-Allow-Credentials", "true");
+        return new ResponseEntity<>(new AuthenticationResponse(jwt, userDetails.getUsername(), roles), HttpStatus.ACCEPTED);
 
     }
 
@@ -163,6 +160,7 @@ public class AuthenticationController {
     @PostMapping("/reset-password")
     public ResponseEntity<?> resetPassword(@RequestBody HashMap<String, String> map) {
         User user;
+        System.out.println(map);
         try {
             user = userService.checkResetPasswordCode(map.get("code"));
             if (user == null) {

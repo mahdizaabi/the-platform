@@ -1,6 +1,7 @@
 package com.theplatform.server.controller;
 
 import com.theplatform.server.dto.CourseDto;
+import com.theplatform.server.dto.CourseDtoRequest;
 import com.theplatform.server.dto.converters.CourseDtoConverter;
 import com.theplatform.server.models.Course;
 import com.theplatform.server.models.User;
@@ -15,6 +16,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 public class CourseController {
     @Autowired
     UserService userService;
@@ -22,7 +24,8 @@ public class CourseController {
     CourseService courseService;
 
     @PostMapping("/course")
-    public ResponseEntity<?> createCourse(@RequestBody CourseDto courseDto, Principal principal) {
+    public ResponseEntity<?> createCourse(@RequestBody CourseDtoRequest courseDto, Principal principal) {
+        System.out.println("===>Course DTOOOOOOOOOREQUEST" + courseDto);
         try {
             //String instructorName = principal.getName();
             CourseDto course = courseService.createCourse(courseDto, principal.getName());
@@ -31,6 +34,12 @@ public class CourseController {
             exc.printStackTrace();
             return new ResponseEntity<>("failed to save course", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+
+    @GetMapping("/course/index/getallcourses")
+    public ResponseEntity<?> getAllCourses(){
+        return new ResponseEntity<>(courseService.getAllCourses(), HttpStatus.OK);
     }
 
     @GetMapping("/instructor/courses")
@@ -46,6 +55,8 @@ public class CourseController {
 
     @GetMapping("/course/{slug}")
     public ResponseEntity<?> getCourseFromSlug(@PathVariable String slug) {
+        if(slug.equals("undefined"))
+            return ResponseEntity.ok().build();
         try {
             CourseDto course = courseService.getCourseFromSlug(slug);
             if (course == null) {

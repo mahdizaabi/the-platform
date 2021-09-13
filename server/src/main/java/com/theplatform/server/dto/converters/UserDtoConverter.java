@@ -1,12 +1,12 @@
 package com.theplatform.server.dto.converters;
 
+import com.github.slugify.Slugify;
 import com.theplatform.server.dto.UserDto;
 import com.theplatform.server.models.User;
 
 public class UserDtoConverter {
 
     static public User DtoToUserConverter(UserDto userDto) {
-        System.out.println(userDto);
         User user = new User();
         user.setUsername(userDto.getUsername());
         user.setPassword(userDto.getPassword());
@@ -18,7 +18,8 @@ public class UserDtoConverter {
         UserDto userDto = new UserDto();
         userDto.setUsername(user.getUsername());
         userDto.setPassword(user.getPassword());
-        userDto.setEmail(userDto.getEmail());
+        userDto.setEmail(user.getEmail());
+
         return userDto;
     }
 }

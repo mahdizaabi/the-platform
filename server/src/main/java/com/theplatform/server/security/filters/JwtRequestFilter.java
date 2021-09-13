@@ -13,9 +13,12 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import javax.persistence.Column;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
+
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
     @Autowired
@@ -28,10 +31,19 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         String username = null;
         String jwt = null;
+
         final String authorizationHeader = httpServletRequest.getHeader("Authorization");
-        //final Cookie[] cookiesx = httpServletRequest.getCookies();
-        //Arrays.stream(cookiesx).forEach(item->System.out.println(item.getValue()));
-        //Cookie coo = Arrays.stream(cookiesx).filter(item->item.getValue().equals("_jwt")).findFirst().orElse(null);
+        if(httpServletRequest.getCookies() != null) {
+            final Cookie[] cookiesx = httpServletRequest.getCookies();
+            //Arrays.stream(cookiesx).forEach(item->System.out.println(item.getValue()));
+            Cookie coo = Arrays.stream(cookiesx).filter(item->item.getName().equals("_jwt")).findFirst().orElse(null);
+           if(coo != null) {
+
+               jwt = coo.getValue();
+               username = jwtUtil.extractUserName(jwt);
+           }
+        }
+
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             jwt = authorizationHeader.substring(7);
             username = jwtUtil.extractUserName(jwt);
@@ -45,7 +57,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                                 userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-                httpServletRequest.setAttribute("id", userDetails.getUsername());
+                //httpServletRequest.setAttribute("id", userDetails.getUsername());
             }
         }
         filterChain.doFilter(httpServletRequest, httpServletResponse);

@@ -61,7 +61,7 @@ class AuthenticationControllerTest {
 
     @Test
     void testguest() throws Exception {
-        mockMvc.perform(get("/hello")
+        mockMvc.perform(get("/api/hello")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string("hello"));
@@ -71,7 +71,7 @@ class AuthenticationControllerTest {
     @Test
     void registerUser() throws Exception {
         Mockito.when(userService.checkIfUserAlreadyExists(any(String.class), any(String.class))).thenReturn(true);
-        mockMvc.perform(post("/register")
+        mockMvc.perform(post("/api/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{ \"username\": \"SAVINGS\", \"email\": 5000.0 }")
                 .accept(MediaType.APPLICATION_JSON))
@@ -91,7 +91,7 @@ class AuthenticationControllerTest {
         Mockito.when(userService.checkIfUserAlreadyExists(any(String.class), any(String.class))).thenReturn(false);
         //dummy.when(() -> UserDtoConverter.DtoToUserConverter(any(UserDto.class))).thenReturn(userTest);
         Mockito.when(userService.saveNewUser(any(User.class))).thenReturn(userTest);
-        mockMvc.perform(post("/register")
+        mockMvc.perform(post("/api/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{ \"username\": \"test\", \"password\": \"SAVINGS\",\"email\": \"SAVINGS\" }")
                 .accept(MediaType.APPLICATION_JSON))

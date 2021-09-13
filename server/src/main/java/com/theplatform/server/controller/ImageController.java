@@ -7,10 +7,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.HashMap;
 
 
 @RestController
+@RequestMapping("/api")
 public class ImageController {
     private ImageService imageService;
 
@@ -19,9 +22,12 @@ public class ImageController {
     }
 
     @PostMapping("/course/upload-image")
-    public ResponseEntity<?> uploadImageToTheCloud(@RequestBody MultipartFile image) {
+    public ResponseEntity<?> uploadImageToTheCloud(@RequestBody String image) {
         try {
-            String uploaded_image_url = imageService.uploadImage(image);
+            byte[] name = Base64.getEncoder().encode(image.getBytes());
+            byte[] decodedString = Base64.getDecoder().decode(new String(name).getBytes(StandardCharsets.UTF_8));
+            System.out.println(new String(decodedString));
+            String uploaded_image_url = imageService.uploadImage(decodedString);
             HashMap<String, String> map = new HashMap<>();
             map.put("imageUri", uploaded_image_url);
             return new ResponseEntity<>(map, HttpStatus.OK);

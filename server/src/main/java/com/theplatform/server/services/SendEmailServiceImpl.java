@@ -2,6 +2,7 @@ package com.theplatform.server.services;
 import com.theplatform.server.models.User;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -10,6 +11,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+
 
 @Service
 public class SendEmailServiceImpl {
@@ -27,7 +29,7 @@ public class SendEmailServiceImpl {
             map.add("subject", "Your password reset code");
             map.add("text", "<b>this is your password</b>" + user.getPasswordResetCode());
             org.springframework.http.HttpHeaders headers = new HttpHeaders();
-            headers.setBasicAuth("api", "key-d97ca6f87ceba17d030593266e89439f");
+            headers.setBasicAuth("api", "key-91bae47903555c2f8d89445a14b6fc63");
             headers.setContentType(MediaType.MULTIPART_FORM_DATA);
             ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, new HttpEntity<>(map, headers), String.class);
             logger.info("Response from Email service: " + response.getBody());

@@ -24,8 +24,13 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeRequests().antMatchers("/auth","/register","/loogout","/login", "/forgot-password", "/reset-password", "/check-code").permitAll()
-                .and().authorizeRequests().antMatchers(HttpMethod.GET, "/testguest").hasAnyAuthority("ROLE_STUDENT")
+                .authorizeRequests().antMatchers(
+                        "/auth","/api/register","/loogout",
+                "/api/login","/api/reset-password","/api/course/*","/api/course/{slug}/**",
+                "/api/forgot-password", "/check-code","/api/course/index/getallcourses"
+        ).permitAll()
+                .and().authorizeRequests().antMatchers(HttpMethod.GET, "/testguest","/api/checkuser","/api/course/index/getallcourses","/api/makeInstructor","/api/loogout").hasAnyAuthority("ROLE_STUDENT")
+                .and().authorizeRequests().antMatchers(HttpMethod.GET, "/current-instructor","/api/instructor/courses","/course","/api/course/upload-image").hasAnyAuthority("ROLE_INSTRUCTOR")
                 .anyRequest().authenticated()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
