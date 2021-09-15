@@ -26,7 +26,7 @@ public class Lesson {
     private Boolean free_preview;
     private Date ts;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "course_id")
     private Course course;
 

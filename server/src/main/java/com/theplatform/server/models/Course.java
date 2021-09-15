@@ -32,7 +32,6 @@ public class Course {
     }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long  id;
     private String course_name;
     private String slug;

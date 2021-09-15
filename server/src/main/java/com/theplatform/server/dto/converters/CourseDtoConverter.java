@@ -4,9 +4,10 @@ import com.github.slugify.Slugify;
 import com.theplatform.server.dto.CourseDto;
 import com.theplatform.server.dto.CourseDtoRequest;
 import com.theplatform.server.models.Course;
-import com.theplatform.server.repositories.CourseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import com.theplatform.server.models.LessonDto;
+import com.theplatform.server.models.LessonDtoConverter;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class CourseDtoConverter {
 
@@ -23,7 +24,9 @@ public class CourseDtoConverter {
         courseDto.setCategory(course.getCategory());
         //courseDto.setUsername(course.getUser().getUsername());
         //courseDto.setUser_id(course.getUser().getId());
-        //courseDto.setSlug(course.getSlug());
+        courseDto.setSlug(course.getSlug());
+        List<LessonDto> lessonDtoList = course.getLessonList().stream().map(LessonDtoConverter::lessonToDtoLesson).collect(Collectors.toList());
+        courseDto.setLessons(lessonDtoList);
         return courseDto;
     }
 
@@ -40,16 +43,16 @@ public class CourseDtoConverter {
         course.setPaid(courseDtoRequest.getPaid());
         course.setCategory(courseDtoRequest.getCategory());
         course.setPublished(courseDtoRequest.getPublished());
-
+        course.setSlug(slg.slugify(courseDtoRequest.getName()));
         //course.setUser(courseDto.getUser());
         return course;
     }
 
     static public Course courseDtoToCourse(CourseDto courseDtoRequest) {
         System.out.println("course dto  -> course");
-
         Slugify slg = new Slugify();
         Course course= new Course();
+        System.out.println(slg.slugify(courseDtoRequest.getName()));
         course.setCourse_name(courseDtoRequest.getName());
         course.setDescription(courseDtoRequest.getDescription());
         course.setImage_preview(courseDtoRequest.getImage_preview());
@@ -57,7 +60,7 @@ public class CourseDtoConverter {
         course.setPaid(courseDtoRequest.getPaid());
         course.setCategory(courseDtoRequest.getCategory());
         course.setPublished(courseDtoRequest.getPublished());
-
+        course.setSlug(slg.slugify(courseDtoRequest.getName()));
         //course.setUser(courseDto.getUser());
         return course;
     }

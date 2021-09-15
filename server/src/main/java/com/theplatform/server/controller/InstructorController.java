@@ -1,9 +1,11 @@
 package com.theplatform.server.controller;
 
 
+import com.theplatform.server.dto.CourseDto;
 import com.theplatform.server.models.AuthenticationResponse;
 import com.theplatform.server.models.Role;
 import com.theplatform.server.models.User;
+import com.theplatform.server.services.CourseService;
 import com.theplatform.server.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +23,11 @@ import java.util.stream.Collectors;
 public class InstructorController {
 
     UserService userService;
+    CourseService courseService;
 
-    public InstructorController(UserService userService) {
+    public InstructorController(UserService userService,CourseService courseService) {
         this.userService = userService;
+        this.courseService = courseService;
     }
     @GetMapping("/makeInstructor")
     public ResponseEntity<?> makeInstructor(Principal principal) {
@@ -43,7 +47,6 @@ public class InstructorController {
 
     @GetMapping("/current-instructor")
     public ResponseEntity<?> currentInstructor(Principal principal) {
-        System.out.println(principal.getName());
         User currentInstructor = userService.getUserByUsername(principal.getName());
         HashMap<String, Boolean> response = new HashMap<>();
         response.put("ok", true);

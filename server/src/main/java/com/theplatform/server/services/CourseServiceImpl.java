@@ -3,8 +3,7 @@ package com.theplatform.server.services;
 import com.theplatform.server.dto.CourseDto;
 import com.theplatform.server.dto.CourseDtoRequest;
 import com.theplatform.server.dto.converters.CourseDtoConverter;
-import com.theplatform.server.models.Course;
-import com.theplatform.server.models.User;
+import com.theplatform.server.models.*;
 import com.theplatform.server.repositories.CourseRepository;
 import com.theplatform.server.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +30,7 @@ public class CourseServiceImpl implements CourseService{
     public CourseDto createCourse(CourseDtoRequest courseDto, String instructorName) {
         Course course = CourseDtoConverter.courseDtoToCoursex(courseDto);
         User user = userService.getUserByUsername(instructorName);
+
         user.getCourseList().add(course);
         course.setUser(user);
         System.out.println("3");
@@ -73,6 +73,21 @@ public class CourseServiceImpl implements CourseService{
         List<Course> allCourses = (List<Course>) courseRepository.findAll();
         List<CourseDto> allCoursesDto = allCourses.stream().map(CourseDtoConverter::courseToDtoConverter).collect(Collectors.toList());
         return allCoursesDto;
+    }
 
+    @Override
+    public List<CourseDto> getAllInstrctorCourses(User instructor) {
+        List<CourseDto> InstructorCourses = instructor.getCourseList().stream().map(CourseDtoConverter::courseToDtoConverter).collect(Collectors.toList());
+        return InstructorCourses;
+    }
+
+    @Override
+    public CourseDto addLessonToCourse(String slug, LessonDto lessonDto) {
+        Lesson lesson = LessonDtoConverter.lessonDtoToLesson(lessonDto);
+        Course course = courseRepository.findBySlug(slug);
+        course.getLessonList().add(lesson);
+        lesson.setCourse(course);
+        Course updatedCourse = courseRepository.save(course);
+        return CourseDtoConverter.courseToDtoConverter(course);
     }
 }

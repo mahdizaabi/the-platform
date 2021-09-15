@@ -30,7 +30,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 "/api/forgot-password", "/check-code","/api/course/index/getallcourses"
         ).permitAll()
                 .and().authorizeRequests().antMatchers(HttpMethod.GET, "/testguest","/api/checkuser","/api/course/index/getallcourses","/api/makeInstructor","/api/loogout").hasAnyAuthority("ROLE_STUDENT")
-                .and().authorizeRequests().antMatchers(HttpMethod.GET, "/current-instructor","/api/instructor/courses","/course","/api/course/upload-image").hasAnyAuthority("ROLE_INSTRUCTOR")
+                .and().authorizeRequests().antMatchers(HttpMethod.GET, "/current-instructor","/api/instructor/courses","/course","/api/course/upload-image", "/api/video/upload").hasAnyAuthority("ROLE_INSTRUCTOR")
                 .anyRequest().authenticated()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

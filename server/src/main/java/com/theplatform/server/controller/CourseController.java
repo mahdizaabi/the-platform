@@ -4,6 +4,7 @@ import com.theplatform.server.dto.CourseDto;
 import com.theplatform.server.dto.CourseDtoRequest;
 import com.theplatform.server.dto.converters.CourseDtoConverter;
 import com.theplatform.server.models.Course;
+import com.theplatform.server.models.LessonDto;
 import com.theplatform.server.models.User;
 import com.theplatform.server.services.CourseService;
 import com.theplatform.server.services.UserService;
@@ -80,6 +81,17 @@ public class CourseController {
         } catch (Exception exception) {
             exception.printStackTrace();
             return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PostMapping("/course/lesson/addlesson/{slug}")
+    public ResponseEntity<?> addLessonToCourse(@PathVariable String slug, @RequestBody LessonDto lessonDto) {
+        try {
+            CourseDto courseDto = courseService.addLessonToCourse(slug, lessonDto);
+            return ResponseEntity.status(201).body(courseDto);
+        } catch(Exception exception){
+            exception.printStackTrace();
+            return  new ResponseEntity<>("Lessont can't be added try later...",HttpStatus.INTERNAL_SERVER_ERROR);
+
         }
     }
 }
