@@ -27,6 +27,7 @@ const CourseView = () => {
     useEffect(() => {
         const fetchCourse = async () => {
             const response = await axios.get(`/api/course/${slug}`);
+            console.log("xxx=>", response.data)
             setFetchedCourse(response.data);
         }
         fetchCourse();
@@ -42,22 +43,21 @@ const CourseView = () => {
 
             toast(`${lessonValues.title} lesson was succefully added`);
             setFetchedCourse({ ...data });
-            setLessonValues({ content: "", title: "", video: {} });
+            setLessonValues({ ...lessonValues, content: "", title: "", video: "" });
             setVisible(false)
         } catch (error) {
             console.log(error);
             setUploading(false);
-            toast(error.message)
+            toast(error.response.data)
         }
     }
     const handelVideo = async (e) => {
         try {
             let videoFile = e.target.files[0];
-            setVideoTitel(videoFile.name);
             setUploading(true);
             const videoData = new FormData();
             videoData.append('video', videoFile);
-            const videoResponseData = await axios.post("/api/course/video/upload", videoData, {
+            const videoResponseData = await axios.post("/api/video/upload", videoData, {
                 onUploadProgress: (e) => {
                     setUploadProgress(Math.round(100 * e.loaded) / e.total)
                 }
@@ -65,26 +65,27 @@ const CourseView = () => {
             setUploading(false);
             setLessonValues({ ...lessonValues, video: videoResponseData.data });
             // setFetchedCourse(data)
-            setVideoTitel('upload video')
+            setVideoTitel(videoFile.name.length >= 10 ? videoFile.name.slice(0, 10) + "..." : videoFile.name);
+
         } catch (error) {
-            console.log(error.message)
+            console.log(error.response.data);
             setUploading(false);
-            toast("lesson adding has failed")
+            toast(error.response.data);
         }
     }
     /*    Delete video from Azure !
     */
     const handleVideoRemove = async () => {
-        const blobName = lessonValues.video.videoUrl.split("/evideos/")[1].split(".mp4")[0];
+        const blobName = lessonValues.video.split("/evideos/")[1].split(".mp4")[0];
         try {
             setUploading(true);
             const deleteVideoResponse = await axios.get(`/api/course/video/remove/${slug}/${blobName}`);
             setLessonValues({ ...lessonValues, video: { videoUrl: "" } });
-            setVideoTitel("")
+            setVideoTitel("");
             setUploading(false);
         } catch (error) {
-            console.log(error)
-            setUploading(false)
+            console.log(error);
+            setUploading(false);
             toast("video removing failed :( ");
         }
     }
@@ -122,7 +123,7 @@ const CourseView = () => {
                         <div className="media d-flex pt-2">
                             <Avatar
                                 size={80}
-                                src={fetchedCouse.image ? fetchedCouse.image.imageUrl : "./course.png"}
+                                src={fetchedCouse.image_preview ? fetchedCouse.image_preview : "./course.png"}
                             ></Avatar>
                             <div className="body-container w-50">
                                 <div className="media-body">
@@ -218,7 +219,7 @@ const CourseView = () => {
                             </Modal>
                             <div className="row pl-5">
                                 <div className="col  lesson-list">
-                                    <h4>{fetchedCouse.lessons?.length} lessons</h4>
+                                    <h4>{fetchedCouse.lessons?.length || 0} lessons</h4>
                                 </div>
                                 <List
                                     itemLayout="horizental"

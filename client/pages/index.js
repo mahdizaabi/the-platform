@@ -6,7 +6,7 @@ import CourseCard from "../components/cards/courseCard";
 const Index = ({courses}) => {
 
     //const [allFetchedCourses, setAllFetchedCourses] = useState([])
-    /*useEffect(() => {
+    useEffect(() => {
 
 
         const fetchAllCourses = async() => {
@@ -18,7 +18,7 @@ const Index = ({courses}) => {
 
         fetchAllCourses();
 
-    }, [])*/
+    }, [])
     return (
         <>
             <h1 className="jumbotron text-center bg-primary square p-4">the Platform... </h1>
@@ -41,7 +41,7 @@ const Index = ({courses}) => {
 }
 
 export async function getServerSideProps() {
-    const {data} = await axios.get(`http://localhost:8003/api/course/index/getallcourses`)
+    const {data} = await axios.get(`http://localhost:9090/api/course/index/getallcourses`)
 
     return (
         {

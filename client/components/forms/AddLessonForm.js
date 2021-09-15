@@ -23,7 +23,7 @@ const AddLessonForm = ({
                     title: ev.target.value
                 })}
                 value={lessonValues.title}
-                placeholder="title"
+                placeholder="title..."
             />
 
             <textarea
@@ -36,7 +36,7 @@ const AddLessonForm = ({
                     content: e.target.value
                 })}
                 values={lessonValues.content}
-                placeholder="Content"
+                placeholder="Content... "
 
             ></textarea>
 
@@ -47,13 +47,12 @@ const AddLessonForm = ({
                 <label htmlFor="video"
                     className="btn col-4 btn-dark btn-block text-left mt-3"
                 >
-                    {videoTitel ? videoTitel : "upload video"}
+                    {videoTitel ? videoTitel : uploading ? "uplaoding ..." : "upload video"}
                     <input
                         type="file"
                         accept="video/*"
                         name="video"
                         hidden
-
                         onChange={(e) => handelVideo(e)}
                         id="video" />
                 </label>
@@ -61,7 +60,7 @@ const AddLessonForm = ({
                     <Progress style={{ marginLeft: "12px" }} type="circle" percent={uploadProgress} width={40} />
                 </div>}
 
-                {!uploading && lessonValues.video.videoUrl && <div className="mt-3  d-flex align-items-center col-1 justify-content-center">
+                {!uploading && lessonValues.video && <div className="mt-3  d-flex align-items-center col-1 justify-content-center">
                     <Tooltip title="Remove">
                         <span
                             onClick={handleVideoRemove}>
@@ -73,7 +72,9 @@ const AddLessonForm = ({
             </div>
 
             <Button
-                onClick={handleAddLesson}
+                onClick={(e) => {handleAddLesson(e)
+                setLessonValues({content:"", title:"", video:""})
+                }}
                 className="col mt-3"
                 size="large"
                 type="primary"
@@ -81,12 +82,12 @@ const AddLessonForm = ({
                 shape="round"
                 disabled={lessonValues.content && lessonValues.title ? false : true}
             >
-                {uploading && lessonValues.video.videoUrl ? "uploading Lesson ..." :
-                uploading && !lessonValues.video.videoUrl ?
+                {uploading && lessonValues.video ? "uploading Lesson ..." :
+                uploading && !lessonValues.video ?
                  "uploading video" : "add lesson"}
             </Button>
         </form>
-
+        <pre> {JSON.stringify(lessonValues, null, 4)} </pre>*
     </div>
 }
 

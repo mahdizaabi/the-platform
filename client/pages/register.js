@@ -9,7 +9,7 @@ import { useContext } from "react";
 import { useRouter } from "next/router";
 const Register = () => {
 
-    const [name, setName] = useState("");
+    const [username, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -31,7 +31,7 @@ const Register = () => {
         e.preventDefault()
         try {
             setLoading(true);
-            const { data } = await axios.post(`api/register`, { name, email, password })
+            const { data } = await axios.post(`/api/register`, { username, email, password })
             setLoading(false)
             toast.success('registration succefull, please login')
         } catch (err) {
@@ -46,7 +46,7 @@ const Register = () => {
                 <form action="" onSubmit={handleSubmit}>
                     <input
                         type="text"
-                        value={name}
+                        value={username}
                         onChange={(e) => { setName(e.target.value) }}
                         className="form-control mb-4 p-2" id=""
                         placeholder="Enter name"
@@ -73,7 +73,7 @@ const Register = () => {
 
                     <button type="submit"
                         className="btn btn-block w-100 btn-primary"
-                        disabled={!name || !email || !password || loading}
+                        disabled={!username || !email || !password || loading}
                     > {loading ? <SyncOutlined spin /> : "Submit"}
 
                     </button>

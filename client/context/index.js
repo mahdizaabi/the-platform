@@ -35,7 +35,7 @@ const Provider = ({ children }) => {
         });
     }, []);
 
-    axios.interceptors.response.use(
+  /*  axios.interceptors.response.use(
         function (response) {
             // any status code that lie within the range of 2XX cause this function
             // to trigger
@@ -63,9 +63,9 @@ const Provider = ({ children }) => {
             }
             return Promise.reject(error);
         }
-    );
+    );  */
 
-    useEffect(() => {
+/*    useEffect(() => {
         const getCsrfToken = async () => {
             try {
             const { data } = await axios.get("/api/csrf-token");
@@ -76,7 +76,7 @@ const Provider = ({ children }) => {
             }
         };
         getCsrfToken();
-    }, []);
+    }, []);*/
 
     return (
         <Context.Provider value={{ state, dispatch }}>{children}</Context.Provider>

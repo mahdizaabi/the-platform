@@ -15,7 +15,7 @@ const UserRoute = ({ children }) => {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const { data } = await axios.get('/api/current-user');
+                const { data } = await axios.get('/checkuser');
                 if (data.ok) {
                     setHidden(false)
                 }

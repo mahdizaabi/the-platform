@@ -15,6 +15,7 @@ const InstructorIndex = () => {
     const myStyle = { marginTop: "-15px", fontSize: "10px" }
     const loadCourses = async () => {
         const { data } = await axios.get("/api/instructor/courses");
+        console.log(data)
         setCourses(data);
     }
     return (<>
@@ -28,11 +29,10 @@ const InstructorIndex = () => {
                         <div key={index} className="media d-flex col-12 align-items-center flex-row pb-3 pt-2">
                             <div className="align-self-start">
                                 <Avatar
-                                    src={course.image ? course.image.imageUrl : '/course.png'}
+                                    src={course.image_preview ? course.image_preview : '/course.png'}
                                     size={80}
                                 ></Avatar>
                             </div>
-
                             <div className="media-body d-flex col-8 pl-5">
                                 <div className="row d-flex w-100">
                                     <div className="d-flex pl-5">
@@ -46,17 +46,19 @@ const InstructorIndex = () => {
                                                     <h5>{course.name}</h5>
                                                 </a>
                                             </Link>
+                                            <p>
+                                                {course?.description}
+                                            </p>
 
                                             <p style={{}}>
-                                                {course.lessons.length} Lessons
+                                                {/*course.lessons.length*/} Lessons
                                             </p>
-                                            {course.lessons.length < 5 ? (
+                                            {/*course.lessons.length < 5 ? (
                                                 <p style={myStyle}>At least 5 lessosn are required to publish a course</p>
                                             ) : course.published ? <p style={myStyle}>"your course is published"</p> :
                                                 <p stye={myStyle}>   you course is ready to be published</p>
-                                            }
+                                            */}
                                         </div>
-
                                         <div className="checkbox col-3 d-flex justify-content-center">
                                             <div className="col-md-2 mt-3 text-center">
                                                 {course.published ? (
@@ -69,12 +71,7 @@ const InstructorIndex = () => {
                                                     </Tooltip>)}
                                             </div>
                                         </div>
-
-
                                     </div>
-
-
-
                                 </div >
                             </div>
                         </div>

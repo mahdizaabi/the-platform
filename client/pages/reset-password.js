@@ -22,12 +22,12 @@ const resetPasswordComponent = () => {
     const { user } = state;
 
     const router = useRouter();
-
+/*
     useEffect(() => {
         if (user) {
             router.push('/')
         }
-    }, [user])
+    }, [user]) */
 
     const handleEmailSubmit = async (e) => {
         e.preventDefault();
@@ -39,8 +39,9 @@ const resetPasswordComponent = () => {
             toast("check your email fro the secret code");
         } catch (error) {
             //error : {response:{data:error}}
+            console.log(err.response.data)
             setLoading(false);
-            toast.error(error.response.data.error);
+            toast.error(err.response.data);
         }
     }
 
@@ -48,7 +49,7 @@ const resetPasswordComponent = () => {
         e.preventDefault();
         try {
             setLoading(true);
-            const { data } = await axios.post("/api/reset-password", { code, newPassword })
+            const { data } = await axios.post("/api/reset-password", { code, hashedPassword:newPassword })
             setLoading(false);
             toast("success!");
             router.push("/login");

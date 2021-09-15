@@ -7,7 +7,7 @@ const { option } = Select;
 
 const CourseCreationFrom = ({
     handleSubmit, handleImage, handleChange, course,
-    setCourse, preview, setPreview, uploadButtonText, handleImageRemove }) => {
+    setCourse, preview, setPreview, uploadButtonText, handleImageRemove , handleUploadImageClick}) => {
     const childrens = () => {
         const options = []
         for (let i = 9.99; i <= 99.9; i++) {
@@ -18,7 +18,7 @@ const CourseCreationFrom = ({
     /**********/
     //console.log("imaaage => ",course?.image?.imageUrl);
     return (<div className="pt-3 pb-3">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} encType="multiparto">
             <div className="form-group m  t-3 mt-3">
                 <input type="text" name="name" className="form-control"
                     placeholder="Name of the course"

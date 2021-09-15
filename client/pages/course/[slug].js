@@ -101,7 +101,7 @@ const SingleCourse = ({ course }) => {
 
 export async function getServerSideProps(context) {
     const { slug } = context.query
-    const { data } = await axios.get(`http://localhost:8003/api/course/${slug}`)
+    const { data } = await axios.get(`http://localhost:9090/api/course/${slug}`)
 
     return (
         {

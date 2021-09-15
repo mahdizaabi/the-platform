@@ -22,17 +22,19 @@ const Login = () => {
     const router = useRouter();
 
     //toprevent an authenticated user from accessing the login page
+    /*
     useEffect(() => {
             if (user) {
                 router.push('/')
         }
     }, [user])
-
+*/
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
             setLoading(true);
-            const { data } = await axios.post(`api/login`, { email, password })
+            const { data } = await axios.post(`/api/login`, { "username":email, password })
+            console.log(data)
             dispatch({
                 type: "LOGIN",
                 payload: data
@@ -41,10 +43,11 @@ const Login = () => {
             window.localStorage.setItem('currentUser', JSON.stringify(data));
             setLoading(false)
             toast.success("You've been succeffully signin")
-            router.push('/user');
+           router.push('/user');
 
         } catch (err) {
-            toast.error(err.response.data);
+            console.log(err.response.data)
+           toast.error(err.response.data);
             setLoading(false);
         }
     }
@@ -55,7 +58,7 @@ const Login = () => {
                 <form action="" onSubmit={handleSubmit}>
 
                     <input
-                        type="email"
+                        type=""
                         name=""
                         value={email}
                         onChange={(e) => { setEmail(e.target.value) }}

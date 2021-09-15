@@ -15,7 +15,7 @@ app
       server.use(
         "/api",
         createProxyMiddleware({
-          target: "http://localhost:8003",
+          target: "http://localhost:9090",
           changeOrigin: true,
         })
       );
@@ -27,7 +27,7 @@ app
 
     server.listen(3000, (err) => {
       if (err) throw err;
-      console.log("> Ready on http://localhost:8002");
+      console.log("> Ready on http://localhost:9090");
     });
   })
   .catch((err) => {

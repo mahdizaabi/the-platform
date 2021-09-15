@@ -10,17 +10,18 @@ const StripeCallback = () => {
     const { state: { user }, dispatch } = useContext(Context);
     useEffect(() => {
         if (user) {
-            const response = axios.post('/api/get-account-status', { name: "mahdi" }).then(res => {
+            const response = axios.get('/api/makeInstructor').then(res => {
                 console.log(res.data)
                 dispatch({
                     type: "LOGIN",
                     payload: res.data
                 })
                 window.localStorage.setItem("currentUser", JSON.stringify(res.data))
-                window.location.href = "/"
+                window.location.href = "/user"
             }).catch((e) => {
-                window.location.href = "/"
-                console.log(e)
+                console.log(e.response.data)
+                window.location.href = "/user"
+
             })
         }
     }, [])

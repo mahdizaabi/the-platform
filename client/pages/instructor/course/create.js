@@ -7,6 +7,17 @@ import axios from 'axios';
 import deleteBlob from '../../../utils/Azure_delete_blob'
 import { useRouter } from 'next/router';
 import { ControlOutlined } from '@ant-design/icons';
+function getBase64(file) {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+        console.log(reader.result);
+    };
+    reader.onerror = function (error) {
+        console.log('Error: ', error);
+    };
+}
+
 const CourseCreate = ({ submitUrl }) => {
     const router = useRouter();
     const { slug } = router.query;
@@ -31,6 +42,7 @@ const CourseCreate = ({ submitUrl }) => {
     useEffect(() => {
         const fetchCourse = async () => {
             const response = await axios.get(`/api/course/${slug}`);
+            console.log("==> respose with undefined", response)
             if (response.data) {
                 console.log(response)
                 setCourse({ ...course, ...response.data });
@@ -46,50 +58,83 @@ const CourseCreate = ({ submitUrl }) => {
     const handleChange = e => {
         setCourse({ ...course, [e.target.name]: e.target.value })
     }
-    const handleImage = (e) => {
 
-        let file = e.target.files[0]
-        if (preview) {
-            URL.revokeObjectURL(file);
-        }
+    const handleUploadImageClick = async (eventx) => {
+        let file = eventx.target.files[0];
         let imagePreview = window.URL.createObjectURL(file);
-        // console.log(previewImageName);
-        //setPreview(previewImageName);
-        //setUploadButtonText(file.name);
+        const imageData = new FormData();
+        imageData.append('imageFile', file);
+        //setImageData(imageData);
         setCourse({ ...course, loading: true })
-        Resizer.imageFileResizer(file, 700, 500, "JPEG", 100, 0, async (Base64ResizedImage) => {
+        if (imageData.entries().next().value[1] !== null) {
             try {
-                setCourse({ ...course, loading: true })
-                let { data } = await axios.post('/api/course/upload-image', {
-                    image: Base64ResizedImage
-                })
-                setCourse({ ...course, loading: false });
-                setPreview(imagePreview);
-                let imageName = file.name;
 
+
+                const { data } = await axios.post("/api/course/upload-image", imageData, {
+                    onUploadProgress: progressEvent => {
+                        console.log("Uploading : " + ((progressEvent.loaded / progressEvent.total) * 100).toString() + "%")
+                    }
+                });
+                setPreview(imagePreview);
+                setCourse({ ...course, loading: false })
+                setImage(data.imageUri);
+                let imageName = file.name;
                 if (imageName.length >= 10) {
                     imageName = imageName.slice(0, 10) + "..."
                 }
                 setUploadButtonText(imageName);
                 setImage(data.imageUri);
+
             } catch (error) {
-                console.log(error)
+                console.log(error.response.data)
                 setCourse({ ...course, loading: false })
-                toast("Image upload failed, try later")
+                toast(error.response.data)
             }
-        })
+
+        };
+    }
+
+
+    const handleImage = async(eventx) => {
+        let file = eventx.target.files[0];
+        let imagePreview = window.URL.createObjectURL(file);
+        const imageData = new FormData();
+        imageData.append('imageFile', file);
+        //setImageData(imageData);
+        setCourse({ ...course, loading: true })
+        if (imageData.entries().next().value[1] !== null) {
+            try {
+                Resizer.imageFileResizer(file, 200, 150, "JPEG", 100, 0, async (imageFile) => {
+                    imageData.append('imageFile', imageFile);
+                    const { data } = await axios.post("/api/course/upload-image", imageData, {
+                        onUploadProgress: progressEvent => {
+                            console.log("Uploading : " + ((progressEvent.loaded / progressEvent.total) * 100).toString() + "%")
+                        }
+                    });
+                    setPreview(imagePreview);
+                    setCourse({ ...course, loading: false })
+                    setImage(data.imageUri);
+                    let imageName = file.name;
+                    if (imageName.length >= 10) {
+                        imageName = imageName.slice(0, 10) + "..."
+                    }
+                    setUploadButtonText(imageName);
+                    setImage(data.imageUri);
+                }, 'file')
+            } catch (error) {
+                console.log(error.response.data)
+                setCourse({ ...course, loading: false })
+                toast(error.response.data)
+            }
+        }
+
 
     }
     const handleSubmit = async (e) => {
         const url = submitUrl ? submitUrl : "/api/course"
         e.preventDefault();
         const response = await axios.post(url, {
-            course: {
-                ...course, image: {
-                    imageUrl: `https://basicstorage1414.blob.core.windows.net/epimages/${image}`,
-                    blobName: image
-                }
-            }
+            ...course, image_preview: `https://basicstorage1414.blob.core.windows.net/test-container/${image}`
         })
         router.push('/instructor');
         console.log(response)
@@ -124,8 +169,9 @@ const CourseCreate = ({ submitUrl }) => {
                 setPreview={setPreview}
                 uploadButtonText={uploadButtonText}
                 handleImageRemove={handleImageRemove}
+                handleUploadImageClick={handleUploadImageClick}
             ></CourseCreationFrom>
-            {image && <img src={`https://basicstorage1414.blob.core.windows.net/epimages/${image}`} alt="dd" />}
+            {image && <img src={`https://basicstorage1414.blob.core.windows.net/test-container/${image}`} alt="rc" />}
         </InstructorRoute>
     </>)
 

@@ -34,7 +34,7 @@ const TopNavigation = () => {
                 type: "LOGOUT"
             })
             window.localStorage.removeItem('currentUser');
-            const { data } = await axios.get("/api/logout");
+            const { data } = await axios.get("/api/loogout");
             router.push('/login')
 
         } catch (e) {
@@ -50,7 +50,7 @@ const TopNavigation = () => {
                 </Link>
             </Item>
 
-            {user && user.role && user.role.includes("Instructor") ?
+            {user && user.role && user.role.includes("ROLE_INSTRUCTOR") ?
                 (<Item key="/instructor/course/create" icon={<CarryOutOutlined />} onClick={(e) => setCurrentPath(e.key)} >
                     <Link href="/instructor/course/create" >
                         <a className={"type"}>Create Course</a>
@@ -84,8 +84,23 @@ const TopNavigation = () => {
                 </Item>
             </>}
 
+
+            {user && user.role && user.role.includes("ROLE_INSTRUCTOR") &&
+
+                <Item
+                    className="float-right"
+                    key="/instructor"
+                    icon={<CarryOutOutlined />}
+                    onClick={(e) => setCurrentPath(e.key)} >
+                    <Link href="/instructor" >
+                        <a >Instructor</a>
+                    </Link>
+                </Item>
+            }
+
+
             {user &&
-                <SubMenu theme="dark" key="submenu" icon={<CoffeeOutlined />} title={user?.name}>
+                <SubMenu theme="dark" key="submenu" icon={<CoffeeOutlined />} title={user?.username}>
                     <ItemGroup theme="dark">
                         <Item key="/user">
                             <Link href="/user">
@@ -101,19 +116,6 @@ const TopNavigation = () => {
 
                 </SubMenu>
 
-            }
-
-            {user && user.role && user.role.includes("Instructor") &&
-
-                <Item
-                    className="float-right"
-                    key="/instructor"
-                    icon={<CarryOutOutlined />}
-                    onClick={(e) => setCurrentPath(e.key)} >
-                    <Link href="/instructor" >
-                        <a >Instructor</a>
-                    </Link>
-                </Item>
             }
         </Menu>
     )
