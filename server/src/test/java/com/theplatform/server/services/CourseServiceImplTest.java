@@ -4,6 +4,7 @@ import com.theplatform.server.dto.CourseDto;
 import com.theplatform.server.dto.CourseDtoRequest;
 import com.theplatform.server.dto.converters.CourseDtoConverter;
 import com.theplatform.server.models.Course;
+import com.theplatform.server.models.Lesson;
 import com.theplatform.server.models.User;
 import com.theplatform.server.repositories.CourseRepository;
 import com.theplatform.server.repositories.UserRepository;
@@ -47,6 +48,9 @@ class CourseServiceImplTest {
         Course course = new Course();
         /* just a fake course to avoid null pointer when converted from course to dto */
         Course courseFromPersist = new Course();
+        Lesson lesson = new Lesson();
+        courseFromPersist.setLessonList(new ArrayList<>());
+        courseFromPersist.getLessonList().add(lesson);
         courseFromPersist.setUser(user_test);
        /*
         try (MockedStatic<CourseDtoConverter> mb = Mockito.mockStatic(CourseDtoConverter.class)) {

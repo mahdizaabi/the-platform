@@ -25,8 +25,11 @@ public class CourseDtoConverter {
         //courseDto.setUsername(course.getUser().getUsername());
         //courseDto.setUser_id(course.getUser().getId());
         courseDto.setSlug(course.getSlug());
-        List<LessonDto> lessonDtoList = course.getLessonList().stream().map(LessonDtoConverter::lessonToDtoLesson).collect(Collectors.toList());
-        courseDto.setLessons(lessonDtoList);
+        if(course.getLessonList() != null) {
+            List<LessonDto> lessonDtoList = course.getLessonList().stream().map(LessonDtoConverter::lessonToDtoLesson).collect(Collectors.toList());
+            courseDto.setLessons(lessonDtoList);
+
+        }
         return courseDto;
     }
 
