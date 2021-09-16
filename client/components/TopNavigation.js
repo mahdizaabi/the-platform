@@ -88,7 +88,7 @@ const TopNavigation = () => {
             {user && user.role && user.role.includes("ROLE_INSTRUCTOR") &&
 
                 <Item
-                    className="float-right"
+                  
                     key="/instructor"
                     icon={<CarryOutOutlined />}
                     onClick={(e) => setCurrentPath(e.key)} >
@@ -100,14 +100,15 @@ const TopNavigation = () => {
 
 
             {user &&
-                <SubMenu theme="dark" key="submenu" icon={<CoffeeOutlined />} title={user?.username}>
+                <SubMenu style={{marginLeft:"auto", paddingRight:"24px"}}
+                    theme="dark" key="submenu" icon={<CoffeeOutlined />} title={user?.username}>
                     <ItemGroup theme="dark">
-                        <Item key="/user">
+                        <Item theme="dark"  key="/user">
                             <Link href="/user">
                                 <a>Dashboard</a>
                             </Link>
                         </Item>
-                        <Item key="/loggout" onClick={() => logout()}>
+                        <Item theme="dark"  key="/loggout" onClick={() => logout()}>
                             <Link href="/">
                                 <a>Logout</a>
                             </Link>

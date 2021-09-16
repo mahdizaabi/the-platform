@@ -50,7 +50,6 @@ const SingleCourse = ({ course }) => {
         if(state.user && enrolled) {
             router.push(`/user/course/${course.slug}`)
         }
-        console.log('free enrollement')
         try {
             const res = await axios.get(`/api/course/enroll-freecourse/${course._id}`)
             setEnrolled(true)

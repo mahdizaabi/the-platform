@@ -44,6 +44,7 @@ const CourseView = () => {
             toast(`${lessonValues.title} lesson was succefully added`);
             setFetchedCourse({ ...data });
             setLessonValues({ ...lessonValues, content: "", title: "", video: "" });
+            setVideoTitel("")
             setVisible(false)
         } catch (error) {
             console.log(error);
@@ -120,7 +121,9 @@ const CourseView = () => {
                 {/*<pre>{JSON.stringify(fetchedCouse, null, 4)}</pre>*/}
                 {fetchedCouse &&
                     <>
-                        <div className="media d-flex pt-2">
+                        <div className="media d-flex pb-2 pt-2 shadow-lg p-3 mb-2 rounded"
+                        style={{backgroundColor:"#f5f5f5"}}
+                        >
                             <Avatar
                                 size={80}
                                 src={fetchedCouse.image_preview ? fetchedCouse.image_preview : "./course.png"}
@@ -180,7 +183,9 @@ const CourseView = () => {
                         </div>
                         {/*  Course description */}
                         <div className="description-box pl-5">
-                            <p style={{ marginLeft: "12px" }}>
+                            <p 
+                            className="pb-2 pt-2 shadow-lg p-3 mb-2 rounded"
+                            >
                                 <b
                                     style={{}}>Description: </b>
                                 {fetchedCouse.description}</p>
@@ -225,7 +230,7 @@ const CourseView = () => {
                                     itemLayout="horizental"
                                     dataSource={fetchedCouse?.lessons}
                                     renderItem={(item, index) =>
-                                    (<Item>
+                                    (<Item className="shadow-sm p-3 mb-5 bg-white rounded">
                                         <Item.Meta
                                             avatar={<Avatar>{index + 1}</Avatar>}
                                             title={item.title}

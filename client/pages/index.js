@@ -5,7 +5,7 @@ import CourseCard from "../components/cards/courseCard";
 
 const Index = ({courses}) => {
 
-    //const [allFetchedCourses, setAllFetchedCourses] = useState([])
+    const [allFetchedCourses, setAllFetchedCourses] = useState([])
     useEffect(() => {
 
 
@@ -22,7 +22,7 @@ const Index = ({courses}) => {
     return (
         <>
             <h1 className="jumbotron text-center bg-primary square p-4">the Platform... </h1>
-            <div className="latest_course container-fluid">
+            <div className="latest_course container">
                 <div className="row d-flex course_list">
                         {courses.length !==0 && courses?.map(course => 
                                    ( 

@@ -29,7 +29,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 "/api/login","/api/reset-password","/api/course/*","/api/course/{slug}/**",
                 "/api/forgot-password", "/check-code","/api/course/index/getallcourses"
         ).permitAll()
-                .and().authorizeRequests().antMatchers(HttpMethod.GET, "/testguest","/api/checkuser","/api/course/index/getallcourses","/api/makeInstructor","/api/loogout").hasAnyAuthority("ROLE_STUDENT")
+                .and().authorizeRequests().antMatchers(HttpMethod.GET, "/testguest","/api/checkuser","/api/course/index/getallcourses",
+                "/api/makeInstructor", "/api/course/check-enrollement/{courseId}","/api/loogout").hasAnyAuthority("ROLE_STUDENT")
                 .and().authorizeRequests().antMatchers(HttpMethod.GET, "/current-instructor","/api/instructor/courses","/course","/api/course/upload-image", "/api/video/upload").hasAnyAuthority("ROLE_INSTRUCTOR")
                 .anyRequest().authenticated()
                 .and().sessionManagement()

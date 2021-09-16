@@ -60,7 +60,7 @@ public class ImageController {
     }
 
     @PostMapping("/image/image-preview/delete")
-    public ResponseEntity<?> imagePreviewDelete(String blobName) {
+    public ResponseEntity<?> imagePreviewDelete(@RequestBody String blobName) {
         if (blobName == null) {
             return new ResponseEntity<>("image not found", HttpStatus.NOT_FOUND);
         }

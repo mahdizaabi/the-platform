@@ -7,16 +7,7 @@ import axios from 'axios';
 import deleteBlob from '../../../utils/Azure_delete_blob'
 import { useRouter } from 'next/router';
 import { ControlOutlined } from '@ant-design/icons';
-function getBase64(file) {
-    var reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = function () {
-        console.log(reader.result);
-    };
-    reader.onerror = function (error) {
-        console.log('Error: ', error);
-    };
-}
+
 
 const CourseCreate = ({ submitUrl }) => {
     const router = useRouter();
@@ -46,7 +37,7 @@ const CourseCreate = ({ submitUrl }) => {
             if (response.data) {
                 console.log(response)
                 setCourse({ ...course, ...response.data });
-                setPreview(response.data.image.imageUrl)
+                setPreview(response.data.image_preview)
             }
 
         }

@@ -1,0 +1,2 @@
+spring.profiles.active: "dev"
+spring.config.import: file:src/main/resources/application-dev.yml

@@ -4,6 +4,7 @@ import com.theplatform.server.models.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -16,8 +17,9 @@ public class CourseDto {
     private Boolean published;
     private Boolean paid;
     private String category;
-    private String username;
+    private String instructor;
     private String slug;
-    private Long user_id;
+    private Date updatedAt;
+    private Long course_id;
     private List<LessonDto> lessons;
 }

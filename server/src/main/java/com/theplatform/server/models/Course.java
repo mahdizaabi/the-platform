@@ -8,7 +8,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import net.minidev.json.annotate.JsonIgnore;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 
@@ -18,18 +20,14 @@ import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "course")
 public class Course {
-
-
-
-    public Course() {
-        this.timestamp = LocalDate.now();
-    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long  id;
@@ -42,13 +40,19 @@ public class Course {
     private String image_preview;
     @Column(name = "published", columnDefinition = "TINYINT")
     private Boolean published;
-    private LocalDate timestamp;
+    @CreationTimestamp
+    private Date createdOn;
+    @UpdateTimestamp
+    private Date updatedOn;
     @ManyToOne
     @JoinColumn(name="user_id")
     @JsonBackReference
     private User user;
-
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "course")
     private List<Lesson> lessonList;
+    @ManyToMany(mappedBy = "enrolledCourses")
+    Set<User> enrolledStudents;
+
+
 
 }

@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -94,4 +95,30 @@ public class CourseController {
 
         }
     }
-}
+    @GetMapping("/course/enroll-freecourse/{courseId}")
+    public ResponseEntity<?> enrollFreeCourse(@PathVariable Long courseId, Principal principal) {
+        try {
+           CourseDto courseDto = courseService.enrollCourse(courseId, principal.getName());
+           if(courseDto == null) {
+               throw new RuntimeException("course not found");
+           }
+           return ResponseEntity.status(200).body(courseDto);
+        } catch(Exception exception){
+            exception.printStackTrace();
+            return  new ResponseEntity<>("Lessont can't be added try later...",HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+    }
+    @GetMapping("/course/check-enrollement/{courseId}")
+    public ResponseEntity<?>CheckEnrollemnt(@PathVariable Long courseId, Principal principal) {
+        HashMap<String, Boolean> map = new HashMap<>();
+        if(courseService.checkEnrollement(courseId, principal.getName())) {
+            map.put("ok", true);
+        } else {
+            map.put("ok", false);
+        }
+        return ResponseEntity.status(200).body(map);
+    }
+
+
+    }

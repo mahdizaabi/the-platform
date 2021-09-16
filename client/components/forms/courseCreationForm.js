@@ -85,6 +85,7 @@ const CourseCreationFrom = ({
                                 name="image"
                                 onChange={handleImage}
                                 accept="image/*"
+                                //value={course.image_preview ? course.image_preview : ""}
                                 hidden
                             />
                         </label>

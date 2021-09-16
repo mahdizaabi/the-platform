@@ -10,22 +10,21 @@ const CourseCard = ({ course }) => {
         >
             <a>
                 <Card
-                    className="mb-4"
+                    className="shadow  mb-5 bg-white rounded"
                     cover={
-                        <img src={course.image.imageUrl}
+                        <img src={course.image_preview}
                         alt={course.name}
-                        style={{"height":"200px", "objectFit": "cover"}}
+                        style={{"height":"150px","padding":"0px", "margin": "0px", "fontSize":"18px","objectFit": "cover"}}
                         className="p-1"
                         ></img>
                     }
                 >
 
-                    <h2 className="font-weight-bold">{course.name}</h2>
-                    <p>by {course.instructor.name}</p>
+                    <h2 style={{"fontSize": "16px", "padding": "0px", "margin": "0px"}} className="font-weight-bold">{course.name}</h2>
+                    <p>by {course?.instructor}</p>
                     <Badge
                     count={course.category}
                     style={{backgroundColor: "#03a9f4"}}
-                    className="pb-2 mr-2"
                     ></Badge>
                     <h5>{course.paid ? CurrencyFormater({amount: course.price, currency: "usd"}) : "free"}</h5>
                 </Card>

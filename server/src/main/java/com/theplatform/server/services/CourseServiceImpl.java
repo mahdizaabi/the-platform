@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -62,6 +63,7 @@ public class CourseServiceImpl implements CourseService{
             return null;
         Course updatedCoursePrePrePersist = CourseDtoConverter.courseDtoToCourse(courseDto);
         updatedCoursePrePrePersist.setId(course.getId());
+        updatedCoursePrePrePersist.setUser(course.getUser());
 
          Course updatedCoursePostPersist = courseRepository.save(updatedCoursePrePrePersist);
         //System.out.println(updatedCoursePostPersist);
@@ -73,6 +75,20 @@ public class CourseServiceImpl implements CourseService{
         List<Course> allCourses = (List<Course>) courseRepository.findAll();
         List<CourseDto> allCoursesDto = allCourses.stream().map(CourseDtoConverter::courseToDtoConverter).collect(Collectors.toList());
         return allCoursesDto;
+    }
+
+    @Override
+    public CourseDto enrollCourse(Long courseId, String username) {
+        Optional<Course> opCourse = courseRepository.findById(courseId);
+        Course course = opCourse.orElseThrow(null);
+        if(course == null) {
+            return null;
+        }
+            User user  = userService.getUserByUsername(username);
+            user.getEnrolledCourses().add(course);
+            course.getEnrolledStudents().add(user);
+            courseRepository.save(course);
+        return CourseDtoConverter.courseToDtoConverter(course);
     }
 
     @Override
@@ -89,5 +105,12 @@ public class CourseServiceImpl implements CourseService{
         lesson.setCourse(course);
         Course updatedCourse = courseRepository.save(course);
         return CourseDtoConverter.courseToDtoConverter(course);
+    }
+
+    @Override
+    public Boolean checkEnrollement(long courseIdn, String username) {
+        User user = userService.getUserByUsername(username);
+        Course course = user.getEnrolledCourses().stream().filter(course1 -> course1.getId() == courseIdn).findFirst().orElseThrow(null);
+        return course == null;
     }
 }

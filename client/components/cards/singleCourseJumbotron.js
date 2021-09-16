@@ -38,7 +38,7 @@ const SingleCourseJumbotron = ({
                             <Badge count={category} style={{ backgroundColor: "#03a9f4" }} className="pb-4 mr-2">
 
                             </Badge>
-                            <p>created by {instructor.name}</p>
+                            <p>created by {instructor}</p>
                             <p>last updated {new Date(updatedAt).toLocaleDateString()}</p>
                             <h4 className="text-light">
                                 {paid ? CurrencyFormater({
@@ -58,16 +58,16 @@ const SingleCourseJumbotron = ({
                                     className="react_video_player">
                                     <ReactPlayer
                                         style={{ maxWidth: "100%" }}
-                                        url={course.lessons[0].video.videoUrl}
+                                        url={course.lessons[0].video}
                                         height="225px"
-                                        light={course?.image?.imageUrl}
+                                        light={course?.image_preview}
                                         playing={false}
                                     ></ReactPlayer>
 
                                 </div> :
                                 <div className="tutorial_cover col-md-3 p-4">
                                     <img
-                                        src={course?.image?.imageUrl}
+                                        src={course?.image_preview}
                                         alt={name}
                                         className="img"
                                         width="300px"

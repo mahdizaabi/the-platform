@@ -26,7 +26,7 @@ const InstructorIndex = () => {
             <div className="row instructor_courses">
                 <div className="row">
                     {courses && courses.map((course, index) => (
-                        <div key={index} className="media d-flex col-12 align-items-center flex-row pb-3 pt-2">
+                        <div key={index} className="shadow-sm p-3 bg-light rounded media mt-2 d-flex col-12 align-items-center flex-row pt-2">
                             <div className="align-self-start">
                                 <Avatar
                                     src={course.image_preview ? course.image_preview : '/course.png'}
@@ -51,13 +51,13 @@ const InstructorIndex = () => {
                                             </p>
 
                                             <p style={{}}>
-                                                {/*course.lessons.length*/} Lessons
+                                                {course.lessons.length} Lessons
                                             </p>
-                                            {/*course.lessons.length < 5 ? (
+                                            {course.lessons.length < 5 ? (
                                                 <p style={myStyle}>At least 5 lessosn are required to publish a course</p>
                                             ) : course.published ? <p style={myStyle}>"your course is published"</p> :
                                                 <p stye={myStyle}>   you course is ready to be published</p>
-                                            */}
+                                            }
                                         </div>
                                         <div className="checkbox col-3 d-flex justify-content-center">
                                             <div className="col-md-2 mt-3 text-center">
