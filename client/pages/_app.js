@@ -22,7 +22,6 @@ const options = {
 
 
 function MyApp({ Component, pageProps }) {
-    console.log("_app is rendering now")
     return (
         <Provider>
             <AlertProvider template={AlertTemplate} {...options}>
