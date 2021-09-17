@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { CurrencyFormater } from '../../utils/utilities';
 import ReactPlayer from 'react-player';
 import { useContext, useEffect, useState } from 'react';
-import SingleCourseJumbotron from '../../components/cards/singlecoursejumbotron';
+import SingleCourseJumbotron from '../../components/cards/singleCourseJumbotron';
 import ModalCoursePreview from '../../components/modals/previewModal';
 import SingleCourseLessons from '../../components/cards/lessonsList'
 import { Context } from '../../context/'
