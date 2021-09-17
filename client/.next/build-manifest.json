@@ -1,0 +1,135 @@
+{
+  "polyfillFiles": [
+    "static/chunks/polyfills-a54b4f32bdc1ef890ddd.js"
+  ],
+  "devFiles": [],
+  "ampDevFiles": [],
+  "lowPriorityFiles": [
+    "static/zT-IZlen_HhTrkCWqhOut/_buildManifest.js",
+    "static/zT-IZlen_HhTrkCWqhOut/_ssgManifest.js"
+  ],
+  "pages": {
+    "/": [
+      "static/chunks/webpack-61095c13c5984b221292.js",
+      "static/chunks/framework-2191d16384373197bc0a.js",
+      "static/chunks/main-c034215587cd157b2989.js",
+      "static/chunks/537-0131635f1167004aff34.js",
+      "static/chunks/pages/index-9c2bd452849ba76eb258.js"
+    ],
+    "/_app": [
+      "static/chunks/webpack-61095c13c5984b221292.js",
+      "static/chunks/framework-2191d16384373197bc0a.js",
+      "static/chunks/main-c034215587cd157b2989.js",
+      "static/css/2be9c8207ae53e48322d.css",
+      "static/chunks/pages/_app-0b2ad3de9f01f6c77de3.js"
+    ],
+    "/_error": [
+      "static/chunks/webpack-61095c13c5984b221292.js",
+      "static/chunks/framework-2191d16384373197bc0a.js",
+      "static/chunks/main-c034215587cd157b2989.js",
+      "static/chunks/pages/_error-dc6a60619b6a523a0c01.js"
+    ],
+    "/course/[slug]": [
+      "static/chunks/webpack-61095c13c5984b221292.js",
+      "static/chunks/framework-2191d16384373197bc0a.js",
+      "static/chunks/main-c034215587cd157b2989.js",
+      "static/chunks/577-53e9d083b03ab919045a.js",
+      "static/chunks/576-1e2edb28bf99f825c6bf.js",
+      "static/chunks/860-3e67e4f3cae22238363e.js",
+      "static/chunks/67-35d26dc3a00cdd04bb12.js",
+      "static/chunks/4-666cbce167d9937c44e1.js",
+      "static/chunks/pages/course/[slug]-fbe57750c927cd2116ed.js"
+    ],
+    "/instructor": [
+      "static/chunks/webpack-61095c13c5984b221292.js",
+      "static/chunks/framework-2191d16384373197bc0a.js",
+      "static/chunks/main-c034215587cd157b2989.js",
+      "static/chunks/576-1e2edb28bf99f825c6bf.js",
+      "static/chunks/391-9d5dcd30323a5fa83a7c.js",
+      "static/chunks/537-0131635f1167004aff34.js",
+      "static/chunks/pages/instructor-94ad5bde5d76c5d32c28.js"
+    ],
+    "/instructor/course/create": [
+      "static/chunks/webpack-61095c13c5984b221292.js",
+      "static/chunks/framework-2191d16384373197bc0a.js",
+      "static/chunks/main-c034215587cd157b2989.js",
+      "static/chunks/577-53e9d083b03ab919045a.js",
+      "static/chunks/576-1e2edb28bf99f825c6bf.js",
+      "static/chunks/860-3e67e4f3cae22238363e.js",
+      "static/chunks/391-9d5dcd30323a5fa83a7c.js",
+      "static/chunks/778-11f15240b6363c18ccc0.js",
+      "static/chunks/pages/instructor/course/create-cabc76e3bca92b7f5e2a.js"
+    ],
+    "/instructor/course/edit/[slug]": [
+      "static/chunks/webpack-61095c13c5984b221292.js",
+      "static/chunks/framework-2191d16384373197bc0a.js",
+      "static/chunks/main-c034215587cd157b2989.js",
+      "static/chunks/577-53e9d083b03ab919045a.js",
+      "static/chunks/576-1e2edb28bf99f825c6bf.js",
+      "static/chunks/860-3e67e4f3cae22238363e.js",
+      "static/chunks/67-35d26dc3a00cdd04bb12.js",
+      "static/chunks/4-666cbce167d9937c44e1.js",
+      "static/chunks/391-9d5dcd30323a5fa83a7c.js",
+      "static/chunks/74-f73face8c2f8c0506976.js",
+      "static/chunks/778-11f15240b6363c18ccc0.js",
+      "static/chunks/pages/instructor/course/edit/[slug]-115b306b5789bb8fd4ea.js"
+    ],
+    "/instructor/course/view/[slug]": [
+      "static/chunks/webpack-61095c13c5984b221292.js",
+      "static/chunks/framework-2191d16384373197bc0a.js",
+      "static/chunks/main-c034215587cd157b2989.js",
+      "static/chunks/577-53e9d083b03ab919045a.js",
+      "static/chunks/576-1e2edb28bf99f825c6bf.js",
+      "static/chunks/860-3e67e4f3cae22238363e.js",
+      "static/chunks/67-35d26dc3a00cdd04bb12.js",
+      "static/chunks/74-f73face8c2f8c0506976.js",
+      "static/chunks/pages/instructor/course/view/[slug]-a665d771fec0999cf9e9.js"
+    ],
+    "/login": [
+      "static/chunks/webpack-61095c13c5984b221292.js",
+      "static/chunks/framework-2191d16384373197bc0a.js",
+      "static/chunks/main-c034215587cd157b2989.js",
+      "static/chunks/pages/login-5491868d421b0c7a8e8c.js"
+    ],
+    "/register": [
+      "static/chunks/webpack-61095c13c5984b221292.js",
+      "static/chunks/framework-2191d16384373197bc0a.js",
+      "static/chunks/main-c034215587cd157b2989.js",
+      "static/chunks/pages/register-99d49d4d900c1b3c8e7b.js"
+    ],
+    "/reset-password": [
+      "static/chunks/webpack-61095c13c5984b221292.js",
+      "static/chunks/framework-2191d16384373197bc0a.js",
+      "static/chunks/main-c034215587cd157b2989.js",
+      "static/chunks/pages/reset-password-9ed2b4482aac741eaba4.js"
+    ],
+    "/stripe/callback": [
+      "static/chunks/webpack-61095c13c5984b221292.js",
+      "static/chunks/framework-2191d16384373197bc0a.js",
+      "static/chunks/main-c034215587cd157b2989.js",
+      "static/chunks/pages/stripe/callback-3fba6d97a3ccfaad43f9.js"
+    ],
+    "/user": [
+      "static/chunks/webpack-61095c13c5984b221292.js",
+      "static/chunks/framework-2191d16384373197bc0a.js",
+      "static/chunks/main-c034215587cd157b2989.js",
+      "static/chunks/pages/user-119f06d47be775466496.js"
+    ],
+    "/user/become-instructor": [
+      "static/chunks/webpack-61095c13c5984b221292.js",
+      "static/chunks/framework-2191d16384373197bc0a.js",
+      "static/chunks/main-c034215587cd157b2989.js",
+      "static/chunks/577-53e9d083b03ab919045a.js",
+      "static/chunks/pages/user/become-instructor-244a43f4686800b832a3.js"
+    ],
+    "/user/course/[slug]": [
+      "static/chunks/webpack-61095c13c5984b221292.js",
+      "static/chunks/framework-2191d16384373197bc0a.js",
+      "static/chunks/main-c034215587cd157b2989.js",
+      "static/chunks/577-53e9d083b03ab919045a.js",
+      "static/chunks/4-666cbce167d9937c44e1.js",
+      "static/chunks/pages/user/course/[slug]-152c8813f814ccdf0701.js"
+    ]
+  },
+  "ampFirstPages": []
+}
