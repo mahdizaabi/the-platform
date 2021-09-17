@@ -2,13 +2,18 @@ spring:
 
 
   datasource:
+<<<<<<< HEAD
     url: jdbc:mysql://localhost:3vagrant 306/the_platform?useUnicode=true&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+=======
+    url: jdbc:mysql://mysqldbx/tpdb?useUnicode=true&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+>>>>>>> 2e01649d8151b8052823e16a3d8ea9abc5adb50c
     username: root
-    password: mahdi
+    password: root
+    platform: mysql
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
     database: mysql
     show-sql: false
   sql:
@@ -20,6 +25,8 @@ spring:
       enabled: true
       max-file-size: 250MB
       max-request-size: 250MB
+server:
+  port: 8080
 azure:
   storage:
     account-name: basicstorage1414

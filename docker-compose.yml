@@ -1,0 +1,21 @@
+version: "3"
+services:
+  paltformcontainer:
+    build: .
+    ports:
+      - "9411:8080"
+    networks:
+      - tpnet
+    depends_on:
+      - mysqldbx
+ 
+  mysqldbx:
+    image: mysql:latest
+    networks:
+      - tpnet
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=tbdb  
+
+networks:
+  tpnet:
