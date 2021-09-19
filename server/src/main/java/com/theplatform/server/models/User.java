@@ -36,8 +36,6 @@ public class User {
     private String password;
     @Column(name = "picture")
     private String picture;
-    //@Column(name = "role", columnDefinition = "varchar(255) default 'student'")
-    //private String role;
     @Column(name = "stripe_seller")
     private String stripe_seller;
     @Column(name = "stripe_account_id")
