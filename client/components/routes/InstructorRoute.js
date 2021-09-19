@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import UserNav from '../navigation/userNavigation';
 import { SyncOutlined } from '@ant-design/icons';
 import { Context } from '../../context';
-import InstructorNavigation from '../navigation/InstructorNavigation';
+import InstructorNavigation from '../navigation/instructorNavigation';
 
 
 
