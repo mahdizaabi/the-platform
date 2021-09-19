@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "https://the-platform-636e3v6ct-mahdizaabi.vercel.app")
 public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
