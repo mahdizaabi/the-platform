@@ -33,8 +33,8 @@ const Login = () => {
         e.preventDefault()
         try {
             setLoading(true);
-            const response = await axios.post(`https://tpbackend01.azurewebsites.net/api/loogin`, { "username":email, password },{withCredentials: true})
-            const {data} = response;
+            const response = await axios.post(`https://tpbackend01.azurewebsites.net/api/loogin`, { "username": email, password }, { withCredentials: true })
+            const { data } = response;
             console.log(response.headers);
             console.log(data)
             dispatch({
@@ -45,11 +45,11 @@ const Login = () => {
             window.localStorage.setItem('currentUser', JSON.stringify(data));
             setLoading(false)
             toast.success("You've been succeffully signin")
-           router.push('/user');
+            router.push('/user');
 
         } catch (err) {
             console.log(err.response.data)
-           toast.error(err.response.data);
+            toast.error(err.response.data);
             setLoading(false);
         }
     }
@@ -94,7 +94,7 @@ const Login = () => {
                 </p>
 
                 <p className="text-center">
-                   forgot password ?
+                    forgot password ?
                     <Link href="/reset-password">
                         <a className="text-danger">reset password</a>
                     </Link>
@@ -103,7 +103,7 @@ const Login = () => {
 
             </div>
 
-            
+
         </>
     )
 }
