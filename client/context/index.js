@@ -35,7 +35,6 @@ const Provider = ({ children }) => {
         });
     }, []);
 
-    axios.defaults.withCredentials = true
 
 
   /*  axios.interceptors.response.use(
