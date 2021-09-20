@@ -33,7 +33,7 @@ const resetPasswordComponent = () => {
         e.preventDefault();
         try {
             setLoading(true);
-            const { data } = await axios.post("/api/forgot-password", { email })
+            const { data } = await axios.post("https://tpbackend01.azurewebsites.net/api/forgot-password", { email })
             setSuccess(true)
             setLoading(false);
             toast("check your email fro the secret code");
@@ -49,7 +49,7 @@ const resetPasswordComponent = () => {
         e.preventDefault();
         try {
             setLoading(true);
-            const { data } = await axios.post("/api/reset-password", { code, hashedPassword:newPassword })
+            const { data } = await axios.post("https://tpbackend01.azurewebsites.net/api/reset-password", { code, hashedPassword:newPassword })
             setLoading(false);
             toast("success!");
             router.push("/login");

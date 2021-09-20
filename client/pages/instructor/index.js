@@ -14,7 +14,7 @@ const InstructorIndex = () => {
 
     const myStyle = { marginTop: "-15px", fontSize: "10px" }
     const loadCourses = async () => {
-        const { data } = await axios.get("/api/instructor/courses");
+        const { data } = await axios.get("https://tpbackend01.azurewebsites.net/api/instructor/courses");
         console.log(data)
         setCourses(data);
     }

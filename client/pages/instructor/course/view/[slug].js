@@ -26,8 +26,7 @@ const CourseView = () => {
     const { slug } = router.query;
     useEffect(() => {
         const fetchCourse = async () => {
-            const response = await axios.get(`/api/course/${slug}`);
-            console.log("xxx=>", response.data)
+            const response = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/${slug}`);
             setFetchedCourse(response.data);
         }
         fetchCourse();
@@ -38,7 +37,7 @@ const CourseView = () => {
         setUploading(true);
         try {
             const { data } = await axios
-                .post(`/api/course/lesson/addlesson/${slug}`, { ...lessonValues })
+                .post(`https://tpbackend01.azurewebsites.net/api/course/lesson/addlesson/${slug}`, { ...lessonValues })
             setUploading(false);
 
             toast(`${lessonValues.title} lesson was succefully added`);
@@ -58,7 +57,7 @@ const CourseView = () => {
             setUploading(true);
             const videoData = new FormData();
             videoData.append('video', videoFile);
-            const videoResponseData = await axios.post("/api/video/upload", videoData, {
+            const videoResponseData = await axios.post("https://tpbackend01.azurewebsites.net/api/video/upload", videoData, {
                 onUploadProgress: (e) => {
                     setUploadProgress(Math.round(100 * e.loaded) / e.total)
                 }
@@ -80,7 +79,7 @@ const CourseView = () => {
         const blobName = lessonValues.video.split("/evideos/")[1].split(".mp4")[0];
         try {
             setUploading(true);
-            const deleteVideoResponse = await axios.get(`/api/course/video/remove/${slug}/${blobName}`);
+            const deleteVideoResponse = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/video/remove/${slug}/${blobName}`);
             setLessonValues({ ...lessonValues, video: { videoUrl: "" } });
             setVideoTitel("");
             setUploading(false);
@@ -94,7 +93,7 @@ const CourseView = () => {
     const handlePublish = async (e, courseId) => {
 
         try {
-            const { data } = await axios.put(`/api/course/publish/${slug}/${courseId}`)
+            const { data } = await axios.put(`https://tpbackend01.azurewebsites.net/api/course/publish/${slug}/${courseId}`)
             setFetchedCourse({ ...fetchedCouse, published: true })
 
             console.log(data)
@@ -108,7 +107,7 @@ const CourseView = () => {
     const handleUnpublish = async (e, courseId) => {
 
         try {
-            const { data } = await axios.put(`/api/course/unpublish/${slug}/${courseId}`)
+            const { data } = await axios.put(`https://tpbackend01.azurewebsites.net/api/course/unpublish/${slug}/${courseId}`)
             setFetchedCourse({ ...fetchedCouse, published: false })
         } catch (error) {
             console.log(error)

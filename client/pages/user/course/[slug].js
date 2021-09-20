@@ -24,7 +24,7 @@ const BenutzerGekauftKurs = () => {
 
             try {
                 alert.info("fetching enrolled course ...")
-                const response = await axios.get(`/api/user/course/${slug}/`)
+                const response = await axios.get(`https://tpbackend01.azurewebsites.net/api/user/course/${slug}/`)
                 setCourse(response.data)
                 console.log(response)
                 //alert.success('Courses are succefully loaded')

@@ -26,7 +26,7 @@ const Edit = () => {
     const [course, setCourse] = useState({})
     useEffect(() => {
         const fetchCourse = async () => {
-            const response = await axios.get(`/api/course/${slug}`);
+            const response = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/${slug}`);
             if (response.data) {
                 setLessons(response.data.lessons)
             }
@@ -57,7 +57,7 @@ const Edit = () => {
         const filtredLessons = lessons.filter((item, indexx) => index !== indexx)
         setLessons(filtredLessons);
         let lessonId = item._id;
-        const response = await axios.delete(`/api/course/lesson/delete/${slug}/${lessonId}`);
+        const response = await axios.delete(`https://tpbackend01.azurewebsites.net/api/course/lesson/delete/${slug}/${lessonId}`);
 
     }
 
@@ -68,7 +68,7 @@ const Edit = () => {
             console.log(blobName);
             try {
                 setUploading(true);
-                const deleteVideoResponse = await axios.get(`/api/course/video/remove/${slug}/${blobName}`);
+                const deleteVideoResponse = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/video/remove/${slug}/${blobName}`);
                 setCurrentClickedLesson({ ...currentClickesLesson, video: { videoUrl: "" } });
                 setUploading(false);
             } catch (error) {
@@ -84,7 +84,7 @@ const Edit = () => {
         const videoData = new FormData();
         videoData.append("video", file);
 
-        const videoResponseData = await axios.post("/api/course/video/upload", videoData, {
+        const videoResponseData = await axios.post("https://tpbackend01.azurewebsites.net/api/course/video/upload", videoData, {
             onUploadProgress: (e) => {
                 setUploadProgress(Math.round(100 * e.loaded) / e.total)
             }
@@ -98,7 +98,7 @@ const Edit = () => {
 
         try {
             const { data } = await axios
-                .put(`/api/course/lesson/update/${slug}/${currentClickesLesson._id}`, currentClickesLesson);
+                .put(`https://tpbackend01.azurewebsites.net/api/course/lesson/update/${slug}/${currentClickesLesson._id}`, currentClickesLesson);
             setCurrentClickedLesson(data);
             setUploadVideoButtonText("Upload Video");
             setVisible("Lesson Updated");
@@ -120,7 +120,7 @@ const Edit = () => {
     return (
         <div className="container edit_page">
             <CourseCreate
-                submitUrl={`/api/course/edit/${slug}`}
+                submitUrl={`https://tpbackend01.azurewebsites.net/api/course/edit/${slug}`}
             />
 
 

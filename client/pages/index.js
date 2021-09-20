@@ -4,20 +4,13 @@ import CourseCard from "../components/cards/courseCard";
 
 
 const Index = ({courses}) => {
-
     const [allFetchedCourses, setAllFetchedCourses] = useState([])
     useEffect(() => {
-
-
         const fetchAllCourses = async() => {
-            console.log('ok')
-            const courses = await axios.get("/api/course/index/getallcourses");
-            console.log(courses)
+            const courses = await axios.get("https://tpbackend01.azurewebsites.net/api/course/index/getallcourses");
             setAllFetchedCourses(courses.data)
         }
-
         fetchAllCourses();
-
     }, [])
     return (
         <>
@@ -41,7 +34,7 @@ const Index = ({courses}) => {
 }
 
 export async function getServerSideProps() {
-    const {data} = await axios.get(`http://localhost:9090/api/course/index/getallcourses`)
+    const {data} = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/index/getallcourses`)
 
     return (
         {

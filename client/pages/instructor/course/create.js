@@ -32,7 +32,7 @@ const CourseCreate = ({ submitUrl }) => {
     ///////////////////////////////////////////////
     useEffect(() => {
         const fetchCourse = async () => {
-            const response = await axios.get(`/api/course/${slug}`);
+            const response = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/${slug}`);
             console.log("==> respose with undefined", response)
             if (response.data) {
                 console.log(response)
@@ -61,7 +61,7 @@ const CourseCreate = ({ submitUrl }) => {
             try {
 
 
-                const { data } = await axios.post("/api/course/upload-image", imageData, {
+                const { data } = await axios.post("https://tpbackend01.azurewebsites.net/api/course/upload-image", imageData, {
                     onUploadProgress: progressEvent => {
                         console.log("Uploading : " + ((progressEvent.loaded / progressEvent.total) * 100).toString() + "%")
                     }
@@ -97,7 +97,7 @@ const CourseCreate = ({ submitUrl }) => {
             try {
                 Resizer.imageFileResizer(file, 200, 150, "JPEG", 100, 0, async (imageFile) => {
                     imageData.append('imageFile', imageFile);
-                    const { data } = await axios.post("/api/course/upload-image", imageData, {
+                    const { data } = await axios.post("https://tpbackend01.azurewebsites.net/api/course/upload-image", imageData, {
                         onUploadProgress: progressEvent => {
                             console.log("Uploading : " + ((progressEvent.loaded / progressEvent.total) * 100).toString() + "%")
                         }
@@ -122,7 +122,7 @@ const CourseCreate = ({ submitUrl }) => {
 
     }
     const handleSubmit = async (e) => {
-        const url = submitUrl ? submitUrl : "/api/course"
+        const url = submitUrl ? submitUrl : "https://tpbackend01.azurewebsites.net/api/course"
         e.preventDefault();
         const response = await axios.post(url, {
             ...course, image_preview: `https://basicstorage1414.blob.core.windows.net/test-container/${image}`
@@ -136,7 +136,7 @@ const CourseCreate = ({ submitUrl }) => {
             return;
         }
         try {
-            const { data } = await axios.post("/api/image/image-preview/delete", {
+            const { data } = await axios.post("https://tpbackend01.azurewebsites.net/api/image/image-preview/delete", {
                 blobName: image
             })
             setPreview("");
