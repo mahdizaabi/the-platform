@@ -33,7 +33,7 @@ const Login = () => {
         e.preventDefault()
         try {
             setLoading(true);
-            const { data } = await axios.post(`https://tpbackend01.azurewebsites.net/api/loogin`, { "username":email, password })
+            const { data } = await axios.post(`https://tpbackend01.azurewebsites.net/api/loogin`, { "username":email, password },{withCredentials: true})
             console.log(data)
             dispatch({
                 type: "LOGIN",
