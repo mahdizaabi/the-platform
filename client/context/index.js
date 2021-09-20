@@ -1,5 +1,6 @@
 import { useReducer, createContext, useEffect } from "react";
 import { useRouter } from "next/router";
+import axios from 'axios';
 
 // initial state
 const intialState = {
@@ -34,7 +35,7 @@ const Provider = ({ children }) => {
         });
     }, []);
 
-    axios.defaults.withCredentials = true;
+    axios.defaults.withCredentials = true
 
 
   /*  axios.interceptors.response.use(
