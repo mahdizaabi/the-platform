@@ -34,6 +34,9 @@ const Provider = ({ children }) => {
         });
     }, []);
 
+    axios.defaults.withCredentials = true;
+
+
   /*  axios.interceptors.response.use(
         function (response) {
             // any status code that lie within the range of 2XX cause this function
