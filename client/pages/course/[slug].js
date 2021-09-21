@@ -12,7 +12,7 @@ import { Context } from '../../context/'
 
 const SingleCourse = ({ course }) => {
 
-
+    console.log(course)
     const [visible, setVisible] = useState(false);
     const [preview, setPreview] = useState("");
     const [enrolled, setEnrolled] = useState(false)
@@ -101,7 +101,6 @@ const SingleCourse = ({ course }) => {
 export async function getServerSideProps(context) {
     const { slug } = context.query
     const { data } = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/${slug}`)
-    console.log(data)
 
     return (
         {
