@@ -24,7 +24,7 @@ const InstructorRoute = ({ children }) => {
     useEffect(() => {
         const fetchConstructor = async () => {
             try {
-                const { data } = await axios.get('/api/current-instructor');
+                const { data } = await axios.get('https://tpbackend01.azurewebsites.net/api/current-instructor');
                 if (data.ok) {
                     setHidden(false)
                 }

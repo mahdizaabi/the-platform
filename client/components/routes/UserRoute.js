@@ -15,7 +15,7 @@ const UserRoute = ({ children }) => {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const { data } = await axios.get('/checkuser');
+                const { data } = await axios.get('https://tpbackend01.azurewebsites.net/api/checkuser');
                 if (data.ok) {
                     setHidden(false)
                 }
