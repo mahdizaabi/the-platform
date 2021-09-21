@@ -25,7 +25,7 @@ const UserIndex = () => {
                 alert.success('Courses are succefully loaded')
             } catch (error) {
                 console.log(error.message)
-                alert.error("couldn't fetch the courses, try later")
+                alert.error(`====>${header}`)
             }
 
         }
