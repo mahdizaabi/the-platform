@@ -22,7 +22,7 @@ server:
   port: 9090
 azure:
   storage:
-    account-name: basicstorage1414
-    account-key: W4/q0164K3iX7en1J3c1nWj54p7PPCOH5Rx969K7WYibgzC7VdTNIl/9qkCfJPjWZBt0Vr9fMt0eygYKAnTF2A==
-    blob-endpoint: https://basicstorage1414.blob.core.windows.net/
+    account-name: ###############
+    account-key: ######################################
+    blob-endpoint: #############################
 logging.level.org.springframework.web: DEBUG
