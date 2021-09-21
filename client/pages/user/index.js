@@ -13,7 +13,7 @@ const UserIndex = () => {
     useEffect(() => {
         const loadCourses = async () => {
             try {
-                const response = await axios.get(`https://tpbackend01.azurewebsites.net/api/checkuser`,{withCredentials: true})
+                const response = await axios.get(`https://tpbackend01.azurewebsites.net/api/checkuser`)
                 setFetchedCourses(response.data)
                 console.log(response.data)
                 alert.success('Courses are succefully loaded')

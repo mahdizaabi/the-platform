@@ -10,7 +10,7 @@ const StripeCallback = () => {
     const { state: { user }, dispatch } = useContext(Context);
     useEffect(() => {
         if (user) {
-            const res = axios.get('https://tpbackend01.azurewebsites.net/api/makeInstructor').then(res => {
+            const res = axios.get('https://tpbackend01.azurewebsites.net/api/makeInstructor',{withCredentials: true}).then(res => {
                 console.log(res.data)
                 dispatch({
                     type: "LOGIN",
