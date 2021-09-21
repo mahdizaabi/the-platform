@@ -101,6 +101,7 @@ const SingleCourse = ({ course }) => {
 export async function getServerSideProps(context) {
     const { slug } = context.query
     const { data } = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/${slug}`)
+    console.log(data)
 
     return (
         {
