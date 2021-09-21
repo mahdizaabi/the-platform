@@ -24,7 +24,13 @@ const InstructorRoute = ({ children }) => {
     useEffect(() => {
         const fetchConstructor = async () => {
             try {
-                const { data } = await axios.get('https://tpbackend01.azurewebsites.net/api/current-instructor');
+                const user = JSON.parse(window.localStorage.getItem("currentUser"));
+                const header = user.jwt;
+                const { data } = await axios.get('https://tpbackend01.azurewebsites.net/api/current-instructor', {
+           
+                    headers: {
+                        'Authorization': `Bearer ${header}`
+                    }});
                 if (data.ok) {
                     setHidden(false)
                 }
