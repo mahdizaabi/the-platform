@@ -51,14 +51,14 @@ const SingleCourseJumbotron = ({
                             {course?.lessons[0]?.video?.videoUrl ?
                                 <div
                                     onClick={() => {
-                                        setPreview(course.lessons[0].video.videoUrl)
+                                        setPreview(course.lessons[0].video_preview)
                                         setVisible(!visible)
                                     }}
 
                                     className="react_video_player">
                                     <ReactPlayer
                                         style={{ maxWidth: "100%" }}
-                                        url={course.lessons[0].video}
+                                        url={course.lessons[0].video_preview}
                                         height="225px"
                                         light={course?.image_preview}
                                         playing={false}
