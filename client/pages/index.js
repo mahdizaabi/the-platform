@@ -8,6 +8,7 @@ const Index = ({courses}) => {
     useEffect(() => {
         const fetchAllCourses = async() => {
             const courses = await axios.get("https://tpbackend01.azurewebsites.net/api/course/index/getallcourses");
+            console.log(courses.data)
             setAllFetchedCourses(courses.data)
         }
         fetchAllCourses();
