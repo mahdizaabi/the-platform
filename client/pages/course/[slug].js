@@ -32,7 +32,7 @@ const SingleCourse = ({ course }) => {
     useEffect(() => {
 
         const fetch_course_payement_status = async () => {
-            const response = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/check-enrollement/${course._id}`)
+            const response = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/check-enrollement/${course.course_id}`)
             console.log(response)
             setEnrolled(response.data.ok)
         }
@@ -51,7 +51,7 @@ const SingleCourse = ({ course }) => {
             router.push(`/user/course/${course.slug}`)
         }
         try {
-            const res = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/enroll-freecourse/${course._id}`)
+            const res = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/enroll-freecourse/${course.course_id}`)
             setEnrolled(true)
 
             console.log(res)
