@@ -13,7 +13,13 @@ const UserIndex = () => {
     useEffect(() => {
         const loadCourses = async () => {
             try {
-                const response = await axios.get(`https://tpbackend01.azurewebsites.net/api/checkuser`)
+                const user = window.localStorage.getItem("currentUser");
+                const header = user.jwt;
+
+                const response = await axios.get(`https://tpbackend01.azurewebsites.net/api/checkuser`,{
+                    headers: {
+                      'Authorization': `Bearer ${header}`
+                    }})
                 setFetchedCourses(response.data)
                 console.log(response.data)
                 alert.success('Courses are succefully loaded')
