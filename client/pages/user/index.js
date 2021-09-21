@@ -15,7 +15,7 @@ const UserIndex = () => {
             try {
                 const user = window.localStorage.getItem("currentUser");
                 const header = user.jwt;
-
+                    console.log(header)
                 const response = await axios.get(`https://tpbackend01.azurewebsites.net/api/checkuser`,{
                     headers: {
                       'Authorization': `Bearer ${header}`
@@ -25,7 +25,7 @@ const UserIndex = () => {
                 alert.success('Courses are succefully loaded')
             } catch (error) {
                 console.log(error.message)
-                alert.error(`====>${header}`)
+                alert.error("couldnx't fetch the courses, try later")
             }
 
         }
