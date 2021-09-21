@@ -32,7 +32,12 @@ const CourseCreate = ({ submitUrl }) => {
     ///////////////////////////////////////////////
     useEffect(() => {
         const fetchCourse = async () => {
-            const response = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/${slug}`);
+            const user = JSON.parse(window.localStorage.getItem("currentUser"));
+            const header = user.jwt;
+            const response = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/${slug}`,{
+                headers: {
+                  'Authorization': `Bearer ${header}`
+                }});
             console.log("==> respose with undefined", response)
             if (response.data) {
                 console.log(response)

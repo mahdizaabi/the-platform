@@ -32,7 +32,7 @@ const SingleCourse = ({ course }) => {
     useEffect(() => {
 
         const fetch_course_payement_status = async () => {
-            const response = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/check-enrollement/${course._id}`)
+            const response = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/check-enrollement/${course._id}`packagepppp  )
             console.log(response)
             setEnrolled(response.data.ok)
         }

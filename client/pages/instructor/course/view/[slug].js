@@ -26,7 +26,13 @@ const CourseView = () => {
     const { slug } = router.query;
     useEffect(() => {
         const fetchCourse = async () => {
-            const response = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/${slug}`);
+            const user = JSON.parse(window.localStorage.getItem("currentUser"));
+            const header = user.jwt;
+            const response = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/${slug}`, {
+                headers: {
+                    'Authorization': `Bearer ${header}`
+                }
+            });
             setFetchedCourse(response.data);
         }
         fetchCourse();
@@ -36,8 +42,13 @@ const CourseView = () => {
         e.preventDefault();
         setUploading(true);
         try {
+            const user = JSON.parse(window.localStorage.getItem("currentUser"));
+            const header = user.jwt;
             const { data } = await axios
-                .post(`https://tpbackend01.azurewebsites.net/api/course/lesson/addlesson/${slug}`, { ...lessonValues })
+                .post(`https://tpbackend01.azurewebsites.net/api/course/lesson/addlesson/${slug}`, { ...lessonValues },{
+                    headers: {
+                      'Authorization': `Bearer ${header}`
+                    }})
             setUploading(false);
 
             toast(`${lessonValues.title} lesson was succefully added`);
@@ -57,7 +68,11 @@ const CourseView = () => {
             setUploading(true);
             const videoData = new FormData();
             videoData.append('video', videoFile);
-            const videoResponseData = await axios.post("https://tpbackend01.azurewebsites.net/api/video/upload", videoData, {
+            const user = JSON.parse(window.localStorage.getItem("currentUser"));
+            const header = user.jwt;
+            const videoResponseData = await axios.post("https://tpbackend01.azurewebsites.net/api/video/upload", videoData, { headers: {
+                'Authorization': `Bearer ${header}`
+              },
                 onUploadProgress: (e) => {
                     setUploadProgress(Math.round(100 * e.loaded) / e.total)
                 }
@@ -79,7 +94,11 @@ const CourseView = () => {
         const blobName = lessonValues.video.split("/evideos/")[1].split(".mp4")[0];
         try {
             setUploading(true);
-            const deleteVideoResponse = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/video/remove/${slug}/${blobName}`);
+            const user = JSON.parse(window.localStorage.getItem("currentUser"));
+            const header = user.jwt;
+            const deleteVideoResponse = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/video/remove/${slug}/${blobName}`,{ headers: {
+                'Authorization': `Bearer ${header}`
+              }});
             setLessonValues({ ...lessonValues, video: { videoUrl: "" } });
             setVideoTitel("");
             setUploading(false);
@@ -93,7 +112,11 @@ const CourseView = () => {
     const handlePublish = async (e, courseId) => {
 
         try {
-            const { data } = await axios.put(`https://tpbackend01.azurewebsites.net/api/course/publish/${slug}/${courseId}`)
+            const user = JSON.parse(window.localStorage.getItem("currentUser"));
+            const header = user.jwt;
+            const { data } = await axios.put(`https://tpbackend01.azurewebsites.net/api/course/publish/${slug}/${courseId}`,{ headers: {
+                'Authorization': `Bearer ${header}`
+              }})
             setFetchedCourse({ ...fetchedCouse, published: true })
 
             console.log(data)
@@ -107,7 +130,11 @@ const CourseView = () => {
     const handleUnpublish = async (e, courseId) => {
 
         try {
-            const { data } = await axios.put(`https://tpbackend01.azurewebsites.net/api/course/unpublish/${slug}/${courseId}`)
+            const user = JSON.parse(window.localStorage.getItem("currentUser"));
+            const header = user.jwt;
+            const { data } = await axios.put(`https://tpbackend01.azurewebsites.net/api/course/unpublish/${slug}/${courseId}`,{ headers: {
+                'Authorization': `Bearer ${header}`
+              }})
             setFetchedCourse({ ...fetchedCouse, published: false })
         } catch (error) {
             console.log(error)
@@ -121,7 +148,7 @@ const CourseView = () => {
                 {fetchedCouse &&
                     <>
                         <div className="media d-flex pb-2 pt-2 shadow-lg p-3 mb-2 rounded"
-                        style={{backgroundColor:"#f5f5f5"}}
+                            style={{ backgroundColor: "#f5f5f5" }}
                         >
                             <Avatar
                                 size={80}
@@ -182,8 +209,8 @@ const CourseView = () => {
                         </div>
                         {/*  Course description */}
                         <div className="description-box pl-5">
-                            <p 
-                            className="pb-2 pt-2 shadow-lg p-3 mb-2 rounded"
+                            <p
+                                className="pb-2 pt-2 shadow-lg p-3 mb-2 rounded"
                             >
                                 <b
                                     style={{}}>Description: </b>

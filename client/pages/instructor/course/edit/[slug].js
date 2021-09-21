@@ -26,7 +26,13 @@ const Edit = () => {
     const [course, setCourse] = useState({})
     useEffect(() => {
         const fetchCourse = async () => {
-            const response = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/${slug}`);
+            const user = JSON.parse(window.localStorage.getItem("currentUser"));
+            const header = user.jwt;
+            const response = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/${slug}`,{
+                headers: {
+                    'Authorization': `Bearer ${header}`
+                }
+            });
             if (response.data) {
                 setLessons(response.data.lessons)
             }
@@ -57,7 +63,13 @@ const Edit = () => {
         const filtredLessons = lessons.filter((item, indexx) => index !== indexx)
         setLessons(filtredLessons);
         let lessonId = item._id;
-        const response = await axios.delete(`https://tpbackend01.azurewebsites.net/api/course/lesson/delete/${slug}/${lessonId}`);
+        const user = JSON.parse(window.localStorage.getItem("currentUser"));
+        const header = user.jwt;
+        const response = await axios.delete(`https://tpbackend01.azurewebsites.net/api/course/lesson/delete/${slug}/${lessonId}`,{
+            headers: {
+                'Authorization': `Bearer ${header}`
+            }
+        });
 
     }
 
@@ -68,7 +80,13 @@ const Edit = () => {
             console.log(blobName);
             try {
                 setUploading(true);
-                const deleteVideoResponse = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/video/remove/${slug}/${blobName}`);
+                const user = JSON.parse(window.localStorage.getItem("currentUser"));
+                const header = user.jwt;
+                const deleteVideoResponse = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/video/remove/${slug}/${blobName}`,{
+                    headers: {
+                        'Authorization': `Bearer ${header}`
+                    }
+                });
                 setCurrentClickedLesson({ ...currentClickesLesson, video: { videoUrl: "" } });
                 setUploading(false);
             } catch (error) {
@@ -83,8 +101,13 @@ const Edit = () => {
         setUploading(true);
         const videoData = new FormData();
         videoData.append("video", file);
-
+        const user = JSON.parse(window.localStorage.getItem("currentUser"));
+        const header = user.jwt;
         const videoResponseData = await axios.post("https://tpbackend01.azurewebsites.net/api/course/video/upload", videoData, {
+           
+            headers: {
+                'Authorization': `Bearer ${header}`
+            },
             onUploadProgress: (e) => {
                 setUploadProgress(Math.round(100 * e.loaded) / e.total)
             }
@@ -97,8 +120,12 @@ const Edit = () => {
         e.preventDefault();
 
         try {
+            const user = JSON.parse(window.localStorage.getItem("currentUser"));
+            const header = user.jwt;
             const { data } = await axios
-                .put(`https://tpbackend01.azurewebsites.net/api/course/lesson/update/${slug}/${currentClickesLesson._id}`, currentClickesLesson);
+                .put(`https://tpbackend01.azurewebsites.net/api/course/lesson/update/${slug}/${currentClickesLesson._id}`, currentClickesLesson,headers: {
+                    'Authorization': `Bearer ${header}`
+                });
             setCurrentClickedLesson(data);
             setUploadVideoButtonText("Upload Video");
             setVisible("Lesson Updated");

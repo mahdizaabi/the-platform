@@ -44,6 +44,7 @@ const Login = () => {
             //save userData in local storage, to avoid data lost after refreshing!
             window.localStorage.setItem('currentUser', JSON.stringify(data));
             setLoading(false)
+            axios.defaults.headers.common['Authorization'] = data.jwt;
             toast.success("You've been succeffully signin")
             router.push('/user');
 
