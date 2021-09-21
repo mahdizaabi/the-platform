@@ -120,12 +120,9 @@ const Edit = () => {
         e.preventDefault();
 
         try {
-            const user = JSON.parse(window.localStorage.getItem("currentUser"));
-            const header = user.jwt;
+           
             const { data } = await axios
-                .put(`https://tpbackend01.azurewebsites.net/api/course/lesson/update/${slug}/${currentClickesLesson._id}`, currentClickesLesson,headers: {
-                    'Authorization': `Bearer ${header}`
-                });
+                .put(`https://tpbackend01.azurewebsites.net/api/course/lesson/update/${slug}/${currentClickesLesson._id}`, currentClickesLesson);
             setCurrentClickedLesson(data);
             setUploadVideoButtonText("Upload Video");
             setVisible("Lesson Updated");
