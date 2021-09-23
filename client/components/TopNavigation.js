@@ -34,7 +34,7 @@ const TopNavigation = () => {
                 type: "LOGOUT"
             })
             window.localStorage.removeItem('currentUser');
-            const { data } = await axios.get("https://tpbackend01.azurewebsites.net/api/loogout");
+            const { data } = await axios.get(process.env.NEXT_PUBLIC_API  + "/loogout");
             router.push('/login')
 
         } catch (e) {

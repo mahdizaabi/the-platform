@@ -26,32 +26,25 @@ const SingleCourse = ({ course }) => {
     const { state, dispatch } = useContext(Context);
 
     const handlePaidEnrollement = async () => {
-
     }
-
     useEffect(() => {
-
         const fetch_course_payement_status = async () => {
-            const response = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/check-enrollement/${course.course_id}`)
+            const response = await axios.get(process.env.NEXT_PUBLIC_API + `course/check-enrollement/${course.course_id}`)
             console.log(response)
             setEnrolled(response.data.ok)
         }
         if (state.user) {
             fetch_course_payement_status();
-
         }
     }, [state.user, course])
 
-
-
     const handleFreeEnrollement = async () => {
-
         /* go to the course     */
         if(state.user && enrolled) {
             router.push(`/user/course/${course.slug}`)
         }
         try {
-            const res = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/enroll-freecourse/${course.course_id}`)
+            const res = await axios.get(process.env.NEXT_PUBLIC_API + `/course/enroll-freecourse/${course.course_id}`)
             setEnrolled(true)
 
             console.log(res)
@@ -100,7 +93,7 @@ const SingleCourse = ({ course }) => {
 
 export async function getServerSideProps(context) {
     const { slug } = context.query
-    const { data } = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/${slug}`)
+    const { data } = await axios.get(process.env.NEXT_PUBLIC_API + `/course/${slug}`)
 
     return (
         {

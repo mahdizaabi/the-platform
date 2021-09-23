@@ -16,7 +16,7 @@ const UserIndex = () => {
                 const user = JSON.parse(window.localStorage.getItem("currentUser"));
                 const header = user.jwt;
                     console.log("======>", user)
-                const response = await axios.get(`https://tpbackend01.azurewebsites.net/api/checkuser`,{
+                const response = await axios.get(process.env.NEXT_PUBLIC_API+ `/checkuser`,{
                     headers: {
                       'Authorization': `Bearer ${header}`
                     }})

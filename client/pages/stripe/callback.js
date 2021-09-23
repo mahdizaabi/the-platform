@@ -12,11 +12,10 @@ const StripeCallback = () => {
         if (user) {
             const user = JSON.parse(window.localStorage.getItem("currentUser"));
                 const header = user.jwt;
-            const res = axios.get('https://tpbackend01.azurewebsites.net/api/makeInstructor',{
+            const res = axios.get(process.env.NEXT_PUBLIC_API + '/makeInstructor',{
                 headers: {
                   'Authorization': `Bearer ${header}`
                 }}).then(res => {
-                console.log(res.data)
                 dispatch({
                     type: "LOGIN",
                     payload: res.data

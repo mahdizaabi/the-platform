@@ -9,7 +9,6 @@ import { useRouter } from 'next/router';
 
 
 const resetPasswordComponent = () => {
-
     const [email, setEmail] = useState("")
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -30,10 +29,11 @@ const resetPasswordComponent = () => {
     }, [user]) */
 
     const handleEmailSubmit = async (e) => {
+        const API_END_POINT = "/forgot-password"
         e.preventDefault();
         try {
             setLoading(true);
-            const { data } = await axios.post("https://tpbackend01.azurewebsites.net/api/forgot-password", { email })
+            const { data } = await axios.post(process.env.NEXT_PUBLIC_API + API_END_POINT, { email })
             setSuccess(true)
             setLoading(false);
             toast("check your email fro the secret code");
@@ -46,10 +46,11 @@ const resetPasswordComponent = () => {
     }
 
     const handleCodeAndNewPasswordSubmit = async (e) => {
+        const API_END_POINT = "/reset-password"
         e.preventDefault();
         try {
             setLoading(true);
-            const { data } = await axios.post("https://tpbackend01.azurewebsites.net/api/reset-password", { code, hashedPassword:newPassword })
+            const { data } = await axios.post(process.env.NEXT_PUBLIC_API + API_END_POINT, { code, hashedPassword:newPassword })
             setLoading(false);
             toast("success!");
             router.push("/login");

@@ -28,7 +28,7 @@ const CourseView = () => {
         const fetchCourse = async () => {
             const user = JSON.parse(window.localStorage.getItem("currentUser"));
             const header = user.jwt;
-            const response = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/${slug}`, {
+            const response = await axios.get(process.env.NEXT_PUBLIC_API + `/course/${slug}`, {
                 headers: {
                     'Authorization': `Bearer ${header}`
                 }
@@ -45,7 +45,7 @@ const CourseView = () => {
             const user = JSON.parse(window.localStorage.getItem("currentUser"));
             const header = user.jwt;
             const { data } = await axios
-                .post(`https://tpbackend01.azurewebsites.net/api/course/lesson/addlesson/${slug}`, { ...lessonValues },{
+                .post(process.env.NEXT_PUBLIC_API + `/course/lesson/addlesson/${slug}`, { ...lessonValues },{
                     headers: {
                       'Authorization': `Bearer ${header}`
                     }})
@@ -70,7 +70,7 @@ const CourseView = () => {
             videoData.append('video', videoFile);
             const user = JSON.parse(window.localStorage.getItem("currentUser"));
             const header = user.jwt;
-            const videoResponseData = await axios.post("https://tpbackend01.azurewebsites.net/api/video/upload", videoData, { headers: {
+            const videoResponseData = await axios.post(process.env.NEXT_PUBLIC_API + "/video/upload", videoData, { headers: {
                 'Authorization': `Bearer ${header}`
               },
                 onUploadProgress: (e) => {
@@ -96,7 +96,7 @@ const CourseView = () => {
             setUploading(true);
             const user = JSON.parse(window.localStorage.getItem("currentUser"));
             const header = user.jwt;
-            const deleteVideoResponse = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/video/remove/${slug}/${blobName}`,{ headers: {
+            const deleteVideoResponse = await axios.get(process.env.NEXT_PUBLIC_API + `/course/video/remove/${slug}/${blobName}`,{ headers: {
                 'Authorization': `Bearer ${header}`
               }});
             setLessonValues({ ...lessonValues, video: { videoUrl: "" } });
@@ -114,7 +114,7 @@ const CourseView = () => {
         try {
             const user = JSON.parse(window.localStorage.getItem("currentUser"));
             const header = user.jwt;
-            const { data } = await axios.put(`https://tpbackend01.azurewebsites.net/api/course/publish/${slug}/${courseId}`,{ headers: {
+            const { data } = await axios.put(process.env.NEXT_PUBLIC_API + `/course/publish/${slug}/${courseId}`,{ headers: {
                 'Authorization': `Bearer ${header}`
               }})
             setFetchedCourse({ ...fetchedCouse, published: true })
@@ -132,7 +132,7 @@ const CourseView = () => {
         try {
             const user = JSON.parse(window.localStorage.getItem("currentUser"));
             const header = user.jwt;
-            const { data } = await axios.put(`https://tpbackend01.azurewebsites.net/api/course/unpublish/${slug}/${courseId}`,{ headers: {
+            const { data } = await axios.put(process.env.NEXT_PUBLIC_API + `/course/unpublish/${slug}/${courseId}`,{ headers: {
                 'Authorization': `Bearer ${header}`
               }})
             setFetchedCourse({ ...fetchedCouse, published: false })

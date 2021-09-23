@@ -7,7 +7,7 @@ const Index = ({courses}) => {
     const [allFetchedCourses, setAllFetchedCourses] = useState([])
     useEffect(() => {
         const fetchAllCourses = async() => {
-            const courses = await axios.get("https://tpbackend01.azurewebsites.net/api/course/index/getallcourses");
+            const courses = await axios.get(process.env.NEXT_PUBLIC_API + "course/index/getallcourses");
             console.log(courses.data)
             setAllFetchedCourses(courses.data)
         }
@@ -35,7 +35,7 @@ const Index = ({courses}) => {
 }
 
 export async function getServerSideProps() {
-    const {data} = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/index/getallcourses`)
+    const {data} = await axios.get(process.env.NEXT_PUBLIC_API + "course/index/getallcourses")
 
     return (
         {

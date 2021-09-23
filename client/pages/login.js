@@ -33,7 +33,7 @@ const Login = () => {
         e.preventDefault()
         try {
             setLoading(true);
-            const response = await axios.post(`https://tpbackend01.azurewebsites.net/api/loogin`, { "username": email, password })
+            const response = await axios.post(process.env.NEXT_PUBLIC_API + `/loogin`, { "username": email, password })
             const { data } = response;
             console.log(response.headers);
             console.log(data)

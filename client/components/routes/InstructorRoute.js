@@ -26,7 +26,7 @@ const InstructorRoute = ({ children }) => {
             try {
                 const user = JSON.parse(window.localStorage.getItem("currentUser"));
                 const header = user.jwt;
-                const { data } = await axios.get('https://tpbackend01.azurewebsites.net/api/current-instructor', {
+                const { data } = await axios.get(process.env.NEXT_PUBLIC_API  + '/current-instructor', {
            
                     headers: {
                         'Authorization': `Bearer ${header}`

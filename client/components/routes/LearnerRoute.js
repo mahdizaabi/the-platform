@@ -15,7 +15,7 @@ const LearnerRoute = ({ children }) => {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const { data } = await axios.get('https://tpbackend01.azurewebsites.net/api/current-user');
+                const { data } = await axios.get(process.env.NEXT_PUBLIC_API  + '/current-user');
                 if (data.ok) {
                     setHidden(false)
                 }

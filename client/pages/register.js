@@ -31,7 +31,7 @@ const Register = () => {
         e.preventDefault()
         try {
             setLoading(true);
-            const { data } = await axios.post(`https://tpbackend01.azurewebsites.net/api/register`, { username, email, password })
+            const { data } = await axios.post(process.env.NEXT_PUBLIC_API + `/register`, { username, email, password })
             setLoading(false)
             toast.success('registration succefull, please login')
         } catch (err) {

@@ -28,7 +28,7 @@ const Edit = () => {
         const fetchCourse = async () => {
             const user = JSON.parse(window.localStorage.getItem("currentUser"));
             const header = user.jwt;
-            const response = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/${slug}`,{
+            const response = await axios.get(process.env.NEXT_PUBLIC_API + `/course/${slug}`,{
                 headers: {
                     'Authorization': `Bearer ${header}`
                 }
@@ -65,7 +65,7 @@ const Edit = () => {
         let lessonId = item._id;
         const user = JSON.parse(window.localStorage.getItem("currentUser"));
         const header = user.jwt;
-        const response = await axios.delete(`https://tpbackend01.azurewebsites.net/api/course/lesson/delete/${slug}/${lessonId}`,{
+        const response = await axios.delete(process.env.NEXT_PUBLIC_API + `/course/lesson/delete/${slug}/${lessonId}`,{
             headers: {
                 'Authorization': `Bearer ${header}`
             }
@@ -82,7 +82,7 @@ const Edit = () => {
                 setUploading(true);
                 const user = JSON.parse(window.localStorage.getItem("currentUser"));
                 const header = user.jwt;
-                const deleteVideoResponse = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/video/remove/${slug}/${blobName}`,{
+                const deleteVideoResponse = await axios.get(process.env.NEXT_PUBLIC_API + `/course/video/remove/${slug}/${blobName}`,{
                     headers: {
                         'Authorization': `Bearer ${header}`
                     }
@@ -103,7 +103,7 @@ const Edit = () => {
         videoData.append("video", file);
         const user = JSON.parse(window.localStorage.getItem("currentUser"));
         const header = user.jwt;
-        const videoResponseData = await axios.post("https://tpbackend01.azurewebsites.net/api/course/video/upload", videoData, {
+        const videoResponseData = await axios.post(process.env.NEXT_PUBLIC_API + "/course/video/upload", videoData, {
            
             headers: {
                 'Authorization': `Bearer ${header}`
@@ -122,7 +122,7 @@ const Edit = () => {
         try {
            
             const { data } = await axios
-                .put(`https://tpbackend01.azurewebsites.net/api/course/lesson/update/${slug}/${currentClickesLesson._id}`, currentClickesLesson);
+                .put(process.env.NEXT_PUBLIC_API + `/course/lesson/update/${slug}/${currentClickesLesson._id}`, currentClickesLesson);
             setCurrentClickedLesson(data);
             setUploadVideoButtonText("Upload Video");
             setVisible("Lesson Updated");
@@ -144,7 +144,7 @@ const Edit = () => {
     return (
         <div className="container edit_page">
             <CourseCreate
-                submitUrl={`https://tpbackend01.azurewebsites.net/api/course/edit/${slug}`}
+                submitUrl={process.env.NEXT_PUBLIC_API + `/course/edit/${slug}`}
             />
 
 

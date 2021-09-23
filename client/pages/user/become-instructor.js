@@ -20,7 +20,7 @@ const BecomeInstructor = () => {
     }
 
     const becomeInstructor = () => {
-        axios.post('https://tpbackend01.azurewebsites.net/api/makeInstructor').then(response => {
+        axios.post(process.env.NEXT_PUBLIC_API + '/makeInstructor').then(response => {
             console.log(response)
 
             //the link take the user to an external resource which is the strip configuration page!

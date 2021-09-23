@@ -4,9 +4,7 @@ import { useEffect, useState } from 'react'
 import Resizer from 'react-image-file-resizer';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import deleteBlob from '../../../utils/Azure_delete_blob'
 import { useRouter } from 'next/router';
-import { ControlOutlined } from '@ant-design/icons';
 
 
 const CourseCreate = ({ submitUrl }) => {
@@ -34,7 +32,7 @@ const CourseCreate = ({ submitUrl }) => {
         const fetchCourse = async () => {
             const user = JSON.parse(window.localStorage.getItem("currentUser"));
             const header = user.jwt;
-            const response = await axios.get(`https://tpbackend01.azurewebsites.net/api/course/${slug}`,{
+            const response = await axios.get(process.env.NEXT_PUBLIC_API + `/course/${slug}`,{
                 headers: {
                   'Authorization': `Bearer ${header}`
                 }});
@@ -64,9 +62,7 @@ const CourseCreate = ({ submitUrl }) => {
         setCourse({ ...course, loading: true })
         if (imageData.entries().next().value[1] !== null) {
             try {
-
-
-                const { data } = await axios.post("https://tpbackend01.azurewebsites.net/api/course/upload-image", imageData, {
+                const { data } = await axios.post(process.env.NEXT_PUBLIC_API + "/course/upload-image", imageData, {
                     onUploadProgress: progressEvent => {
                         console.log("Uploading : " + ((progressEvent.loaded / progressEvent.total) * 100).toString() + "%")
                     }
@@ -102,7 +98,7 @@ const CourseCreate = ({ submitUrl }) => {
             try {
                 Resizer.imageFileResizer(file, 200, 150, "JPEG", 100, 0, async (imageFile) => {
                     imageData.append('imageFile', imageFile);
-                    const { data } = await axios.post("https://tpbackend01.azurewebsites.net/api/course/upload-image", imageData, {
+                    const { data } = await axios.post(process.env.NEXT_PUBLIC_API + "/course/upload-image", imageData, {
                         onUploadProgress: progressEvent => {
                             console.log("Uploading : " + ((progressEvent.loaded / progressEvent.total) * 100).toString() + "%")
                         }
@@ -127,7 +123,7 @@ const CourseCreate = ({ submitUrl }) => {
 
     }
     const handleSubmit = async (e) => {
-        const url = submitUrl ? submitUrl : "https://tpbackend01.azurewebsites.net/api/course"
+        const url = submitUrl ? submitUrl : process.env.NEXT_PUBLIC_API + "/course"
         e.preventDefault();
         const response = await axios.post(url, {
             ...course, image_preview: `https://basicstorage1414.blob.core.windows.net/test-container/${image}`
@@ -141,7 +137,7 @@ const CourseCreate = ({ submitUrl }) => {
             return;
         }
         try {
-            const { data } = await axios.post("https://tpbackend01.azurewebsites.net/api/image/image-preview/delete", {
+            const { data } = await axios.post(process.env.NEXT_PUBLIC_API + "/image/image-preview/delete", {
                 blobName: image
             })
             setPreview("");
