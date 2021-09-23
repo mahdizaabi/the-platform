@@ -22,6 +22,7 @@ public class CourseDtoConverter {
         courseDto.setPrice(course.getPrice());
         courseDto.setPaid(course.getPaid());
         courseDto.setCategory(course.getCategory());
+        courseDto.setCourse_id(course.getId());
         //courseDto.setUsername(course.getUser().getUsername());
         //courseDto.setUserId(course.getUser().getId());
         if (course.getUpdatedOn() != null) {

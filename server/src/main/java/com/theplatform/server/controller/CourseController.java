@@ -2,10 +2,7 @@ package com.theplatform.server.controller;
 
 import com.theplatform.server.dto.CourseDto;
 import com.theplatform.server.dto.CourseDtoRequest;
-import com.theplatform.server.dto.converters.CourseDtoConverter;
-import com.theplatform.server.models.Course;
 import com.theplatform.server.models.LessonDto;
-import com.theplatform.server.models.User;
 import com.theplatform.server.services.CourseService;
 import com.theplatform.server.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,11 +95,9 @@ public class CourseController {
     @GetMapping("/course/enroll-freecourse/{courseId}")
     public ResponseEntity<?> enrollFreeCourse(@PathVariable Long courseId, Principal principal) {
         try {
-           CourseDto courseDto = courseService.enrollCourse(courseId, principal.getName());
-           if(courseDto == null) {
-               throw new RuntimeException("course not found");
-           }
-           return ResponseEntity.status(200).body(courseDto);
+           courseService.enrollCourse(courseId, principal.getName());
+
+           return new ResponseEntity<>("ok", HttpStatus.OK);
         } catch(Exception exception){
             exception.printStackTrace();
             return  new ResponseEntity<>("Lessont can't be added try later...",HttpStatus.INTERNAL_SERVER_ERROR);

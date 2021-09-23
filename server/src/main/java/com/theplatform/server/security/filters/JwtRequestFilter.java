@@ -38,7 +38,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             //Arrays.stream(cookiesx).forEach(item->System.out.println(item.getValue()));
             Cookie coo = Arrays.stream(cookiesx).filter(item->item.getName().equals("_jwt")).findFirst().orElse(null);
            if(coo != null) {
-
                jwt = coo.getValue();
                username = jwtUtil.extractUserName(jwt);
            }

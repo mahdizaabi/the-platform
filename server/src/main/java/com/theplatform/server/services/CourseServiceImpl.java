@@ -78,7 +78,7 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public CourseDto enrollCourse(Long courseId, String username) {
+    public void enrollCourse(Long courseId, String username) {
         Optional<Course> opCourse = courseRepository.findById(courseId);
         Course course = opCourse.orElseThrow(null);
         if(course == null) {
@@ -88,7 +88,7 @@ public class CourseServiceImpl implements CourseService{
             user.getEnrolledCourses().add(course);
             course.getEnrolledStudents().add(user);
             courseRepository.save(course);
-        return CourseDtoConverter.courseToDtoConverter(course);
+
     }
 
     @Override

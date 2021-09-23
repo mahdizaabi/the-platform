@@ -64,7 +64,7 @@ public class AuthenticationController {
         return new ResponseEntity<>(savedUserDto, null, HttpStatus.CREATED);
     }
 
-    @PostMapping("/login")
+    @PostMapping("/loogin")
     public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequest authenticationRequest,
                                           HttpServletResponse httpServletResponse) throws Exception {
         try {
@@ -74,17 +74,17 @@ public class AuthenticationController {
             exc.printStackTrace();
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
         }
-
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         User user = userService.getUserByUsername(authenticationRequest.getUsername());
         List<String> roles = user.getRoles().stream().map(Role::getName).collect(Collectors.toList());
         final String jwt = jwtUtil.generateToken(userDetails);
         httpServletResponse.setHeader("Authorization", jwt);
         Cookie cookie = new Cookie("_jwt", jwt);
-        cookie.setPath("/");
-        cookie.setSecure(false);
-        cookie.setDomain("localhost");
-        cookie.setHttpOnly(false);
+        cookie.setPath("/api");
+        cookie.setSecure(true);
+        cookie.setMaxAge(86400); // expire in 1 day
+        cookie.setDomain("tpbackend01.azurewebsites.net");
+        cookie.setHttpOnly(true);
         httpServletResponse.addCookie(cookie);
         httpServletResponse.addHeader("Access-Control-Allow-Credentials", "true");
         return new ResponseEntity<>(new AuthenticationResponse(jwt, userDetails.getUsername(), roles), HttpStatus.ACCEPTED);

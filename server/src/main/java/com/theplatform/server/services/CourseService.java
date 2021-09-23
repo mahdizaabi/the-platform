@@ -17,6 +17,6 @@ public interface CourseService {
     List<CourseDto> getAllCourses();
     List<CourseDto> getAllInstrctorCourses(User instructor);
     CourseDto addLessonToCourse(String slug, LessonDto lessonDto);
-    CourseDto enrollCourse(Long courseId, String username);
+    void enrollCourse(Long courseId, String username);
     Boolean checkEnrollement(long courseIdn, String username);
 }

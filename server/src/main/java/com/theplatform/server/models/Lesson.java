@@ -22,6 +22,7 @@ public class Lesson {
     private String title;
     private String slug;
     private String content;
+
     private String video_preview;
     private Boolean free_preview;
     private Date ts;
