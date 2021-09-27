@@ -15,7 +15,7 @@ app
       server.use(
         "/api",
         createProxyMiddleware({
-          target: "http://tpbackend01.azurewebsites.net/",
+          target: "http://localhost:9090/api",
           changeOrigin: true,
         })
       );
