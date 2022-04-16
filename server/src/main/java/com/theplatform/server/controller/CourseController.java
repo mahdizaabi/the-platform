@@ -45,7 +45,7 @@ public class CourseController {
     public ResponseEntity<?> getAllInctructorCourses(Principal principal) {
         try {
             List<CourseDto> coursesList = courseService.getInstructorCourses(principal.getName());
-            return new ResponseEntity<>(LessonDto, HttpStatus.OK);
+            return new ResponseEntity<>(coursesList, HttpStatus.OK);
         } catch (Exception exception) {
             exception.printStackTrace();
             return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
